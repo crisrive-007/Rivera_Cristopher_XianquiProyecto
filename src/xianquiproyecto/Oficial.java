@@ -8,6 +8,9 @@ package xianquiproyecto;
  *
  * @author river
  */
-public class Oficial {
+public class Oficial extends Piezas{
     
+    public void mover(){
+        
+    }
 }

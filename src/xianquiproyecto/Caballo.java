@@ -8,6 +8,9 @@ package xianquiproyecto;
  *
  * @author river
  */
-public class Caballo {
+public class Caballo extends Piezas{
     
+    public void mover(){
+        
+    }
 }
