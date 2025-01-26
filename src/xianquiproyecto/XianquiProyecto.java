@@ -15,8 +15,8 @@ public class XianquiProyecto {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        Tablero tablero = new Tablero();
-        tablero.iniciarTablero();
+        Menu_Inicio menu = new Menu_Inicio();
+        menu.Menu_Inicio();
     }
     
 }

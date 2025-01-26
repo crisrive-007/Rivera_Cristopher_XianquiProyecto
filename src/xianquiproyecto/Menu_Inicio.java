@@ -4,17 +4,19 @@
  */
 package xianquiproyecto;
 
-import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.Graphics;
+import java.awt.Image;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.SwingConstants;
 
 /**
  *
@@ -22,58 +24,54 @@ import javax.swing.SwingConstants;
  */
 public class Menu_Inicio {
     
-    public static void main(String[] args) {
+    public void Menu_Inicio() {
         
-        JFrame frame = new JFrame("Menú de Inicio - Xiangqi");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(400, 300);
-        frame.setLayout(new BorderLayout());
+        JFrame pantalla = new JFrame("Xiangqi");
+        pantalla.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        pantalla.setSize(400, 300);
+        pantalla.setLocationRelativeTo(null);
 
-        JLabel title = new JLabel("XIANQUI", SwingConstants.CENTER);
-        title.setFont(new Font("Arial", Font.BOLD, 24));
-        frame.add(title, BorderLayout.NORTH);
-
-        JPanel buttonPanel = new JPanel();
-        buttonPanel.setLayout(new GridLayout(3, 1, 10, 10));
-
-        JButton logInButton = new JButton("Log In");
-        logInButton.setFont(new Font("Arial", Font.PLAIN, 18));
-        logInButton.addActionListener(new ActionListener() {
+        JPanel menu = new JPanel() {
             @Override
-            public void actionPerformed(ActionEvent e) {
-                // Lógica para Log In aquí
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                ImageIcon fondo = new ImageIcon(getClass().getResource("/imagenes/fondo.jpg"));
+                g.drawImage(fondo.getImage(), 0, 0, getWidth(), getHeight(), this);
             }
-        });
-        buttonPanel.add(logInButton);
+        };
+        menu.setLayout(new BoxLayout(menu, BoxLayout.Y_AXIS));
 
-        JButton createPlayerButton = new JButton("Crear Player");
-        createPlayerButton.setFont(new Font("Arial", Font.PLAIN, 18));
-        createPlayerButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(frame, "Crear Player seleccionado");
-                // Lógica para crear jugador aquí
-            }
-        });
-        buttonPanel.add(createPlayerButton);
+        ImageIcon icon = new ImageIcon(getClass().getResource("/imagenes/XIANGQI.PNG"));
+        Image imagen = icon.getImage().getScaledInstance(250, 65, Image.SCALE_SMOOTH);
+        JLabel titulo = new JLabel(new ImageIcon(imagen));
+        titulo.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        JButton exitButton = new JButton("Salir");
-        exitButton.setFont(new Font("Arial", Font.PLAIN, 18));
-        exitButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                int confirm = JOptionPane.showConfirmDialog(frame, "¿Estás seguro de que deseas salir?", "Confirmar Salida", JOptionPane.YES_NO_OPTION);
-                if (confirm == JOptionPane.YES_OPTION) {
-                    System.exit(0);
-                }
-            }
-        });
-        buttonPanel.add(exitButton);
+        JButton log_in = new JButton("Iniciar Sesión");
+        log_in.setBackground(Color.YELLOW);
+        JButton crear_cuenta = new JButton("Crear Cuenta");
+        crear_cuenta.setBackground(Color.YELLOW);
+        JButton salir = new JButton("Salir");
+        salir.setBackground(Color.YELLOW);
 
-        frame.add(buttonPanel, BorderLayout.CENTER);
+        Dimension buttonSize = new Dimension(150, 30);
+        log_in.setMaximumSize(buttonSize);
+        crear_cuenta.setMaximumSize(buttonSize);
+        salir.setMaximumSize(buttonSize);
 
-        frame.setLocationRelativeTo(null);
-        frame.setVisible(true);
-        
+        log_in.setAlignmentX(Component.CENTER_ALIGNMENT);
+        crear_cuenta.setAlignmentX(Component.CENTER_ALIGNMENT);
+        salir.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        menu.add(Box.createVerticalStrut(20));
+        menu.add(titulo);
+        menu.add(Box.createVerticalStrut(40));
+        menu.add(log_in);
+        menu.add(Box.createVerticalStrut(10));
+        menu.add(crear_cuenta);
+        menu.add(Box.createVerticalStrut(10));
+        menu.add(salir);
+
+        pantalla.add(menu);
+        pantalla.setVisible(true);
     }
 }
