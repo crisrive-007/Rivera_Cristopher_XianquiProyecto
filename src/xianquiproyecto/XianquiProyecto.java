@@ -20,6 +20,9 @@ public class XianquiProyecto {
         
         Tablero tab = new Tablero();
         tab.iniciarTablero();
+        
+        Log_In login = new Log_In();
+        login.Log_In();
     }
     
 }
