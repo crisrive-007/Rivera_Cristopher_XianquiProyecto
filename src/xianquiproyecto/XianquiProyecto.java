@@ -17,6 +17,9 @@ public class XianquiProyecto {
         // TODO code application logic here
         Menu_Inicio menu = new Menu_Inicio();
         menu.Menu_Inicio();
+        
+        Tablero tab = new Tablero();
+        tab.iniciarTablero();
     }
     
 }

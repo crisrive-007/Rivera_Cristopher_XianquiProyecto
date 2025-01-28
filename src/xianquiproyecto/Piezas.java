@@ -4,6 +4,8 @@
  */
 package xianquiproyecto;
 
+import javax.swing.JButton;
+
 /**
  *
  * @author river
@@ -11,4 +13,6 @@ package xianquiproyecto;
 public abstract class Piezas {
     
     public abstract void mover();
+    
+    public abstract void colocarPieza(JButton celda, int fila, int columna);
 }

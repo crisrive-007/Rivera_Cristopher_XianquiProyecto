@@ -9,7 +9,9 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.Image;
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -20,7 +22,7 @@ import javax.swing.SwingConstants;
  *
  * @author river
  */
-public class Tablero extends javax.swing.JFrame {
+public class Tablero {
 
     public void iniciarTablero() {
 
@@ -49,6 +51,27 @@ public class Tablero extends javax.swing.JFrame {
                 } else {
                     celda.setBackground(Color.decode("#feae3f"));
                 }
+                
+                Carro_de_Guerra carro = new Carro_de_Guerra();
+                carro.colocarPieza(celda, fila, columna);
+                
+                Caballo caballo = new Caballo();
+                caballo.colocarPieza(celda, fila, columna);
+                
+                Elefante elefante = new Elefante();
+                elefante.colocarPieza(celda, fila, columna);
+                
+                Oficial oficial = new Oficial();
+                oficial.colocarPieza(celda, fila, columna);
+                
+                General general = new General();
+                general.colocarPieza(celda, fila, columna);
+                
+                Cañon cañon = new Cañon();
+                cañon.colocarPieza(celda, fila, columna);
+
+                Soldado soldado = new Soldado();
+                soldado.colocarPieza(celda, fila, columna);
 
                 casillas.add(celda);
             }
