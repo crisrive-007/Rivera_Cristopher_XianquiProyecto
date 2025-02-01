@@ -11,18 +11,17 @@ import javax.swing.JOptionPane;
  * @author river
  */
 public class Xianqi_Logica {
-    
+
     public Player jugador1;
     public Player jugador2;
     public Player jugador_actual = null;
     public Player[] jugadores = new Player[100];
     public int jugadores_registrados = 0;
-    
+    public static Xianqi_Logica juego = new Xianqi_Logica();
     
     public void ordenar_jugadores() {
-        int n = jugadores.length;
-        for (int i = 0; i < n - 1; i++) {
-            for (int j = 0; j < n - 1 - i; j++) {
+        for (int i = 0; i < jugadores.length - 1; i++) {
+            for (int j = 0; j < jugadores.length - 1 - i; j++) {
                 if (jugadores[j] != null && jugadores[j + 1] != null && jugadores[j].getPuntos() < jugadores[j + 1].getPuntos()) {
                     Player temp = jugadores[j];
                     jugadores[j] = jugadores[j + 1];
@@ -31,43 +30,70 @@ public class Xianqi_Logica {
             }
         }
     }
-    
+
     public void eliminar_cuenta() {
         if (jugador1 != null) {
             jugador1.setUsername("");
             jugador1.setPuntos(0);
         }
     }
-    
-    public Player inicio_sesion(String username, String password) {
-        for (int i = 0; i < jugadores_registrados; i++) {
-            if (jugadores[i].getUsername().equals(username) && jugadores[i].getPassword().equals(password)) {
-                jugador1 = jugadores[i];
-                return jugadores[i];
+
+    public Player inicio_sesion(int index, String username, String password) {
+        if (this.jugadores[index] == null) {
+            JOptionPane.showMessageDialog(null, "Username o contraseña incorrectos.");
+            return null;
+        }
+        
+        if (index < jugadores.length) {
+            if (jugadores[index].getUsername().equals(username) && jugadores[index].getPassword().equals(password)) {
+                jugador1 = jugadores[index];
+                JOptionPane.showMessageDialog(null, "Inicio de sesión exitoso. ¡Bienvenido, " + username + "!");
+                return jugadores[index];
+            } else {
+                return inicio_sesion(index + 1, username, password);
             }
         }
-        System.out.println("Error: Username o contraseña incorrectos.");
+        JOptionPane.showMessageDialog(null, "Username o contraseña incorrectos.");
         return null;
     }
-    
-    public void crear_jugador(String username, String password) {
-        if (jugadores_registrados >= jugadores.length) {
-            return;
+
+    public Player crear_jugador(String username, String password) {
+        if (usuario_existente(0, username)) {
+            JOptionPane.showMessageDialog(null, "Este usuario ya existe. Intente con otro.");
+            return null;
         }
 
-        jugadores[jugadores_registrados] = new Player(username, password);
-        jugadores_registrados++;
+        if (password.length() == 5) {
+            if (jugadores_registrados < jugadores.length) {
+                jugadores[jugadores_registrados] = new Player(username, password);
+                jugadores_registrados++;
+                JOptionPane.showMessageDialog(null, "Se ha creado al jugador " + username + " exitosamente.");
+                return jugadores[jugadores_registrados - 1];
+            } else {
+                JOptionPane.showMessageDialog(null, "No hay espacio para más jugadores.");
+                return null;
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "La contraseña debe tener 5 caracteres.");
+            return null;
+        }
     }
-    
-    public boolean usuario_existente(String username) {
-        for (int i = 0; i < jugadores_registrados; i++) {
-            if (jugadores[i].getUsername().equals(username)) {
+
+    public boolean usuario_existente(int index, String username) {
+        if (jugadores[index] == null) {
+            return false;
+        }
+
+        if (index < jugadores.length) {
+            if (jugadores[index].getUsername().equals(username)) {
                 return true;
+            } else {
+                return usuario_existente(index + 1, username);
             }
         }
         return false;
     }
-    
+
     public Player jugador2(String username) {
         for (int i = 0; i < jugadores_registrados; i++) {
             if (jugadores[i].getUsername().equals(username) && !username.equalsIgnoreCase(String.valueOf(jugador1.getUsername()))) {
@@ -79,5 +105,5 @@ public class Xianqi_Logica {
         }
         return null;
     }
-    
+
 }

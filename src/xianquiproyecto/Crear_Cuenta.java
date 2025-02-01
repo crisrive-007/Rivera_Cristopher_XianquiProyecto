@@ -4,30 +4,20 @@
  */
 package xianquiproyecto;
 
-import java.awt.*;
 import javax.swing.*;
-
+import java.awt.*;
 /**
  *
  * @author river
  */
-public class Log_In {
-
-    public void Log_In() {
-
+public class Crear_Cuenta {
+    
+    public void Crear_Cuenta() {
+        
         JFrame frame = new JFrame("Login");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(500, 400);
         frame.setLocationRelativeTo(null);
-        
-        JButton salir = new JButton("Salir");        
-        salir.setAlignmentX(Component.LEFT_ALIGNMENT);
-        salir.addActionListener(e -> {
-            Menu_Inicio menu = new Menu_Inicio();
-            menu.Menu_Inicio();
-            frame.dispose();
-        });
-
 
         JPanel log_in = new JPanel() {
             @Override
@@ -76,15 +66,15 @@ public class Log_In {
         gbc.gridx = 1;
         formPanel.add(contraseña, gbc);
 
-        JButton Login = new JButton("Iniciar Sesión");
+        JButton Login = new JButton("Crear Cuenta");
         Login.setBackground(Color.YELLOW);
         Login.setAlignmentX(Component.CENTER_ALIGNMENT);
         Login.setFont(new Font("Arial", Font.BOLD, 20));
 
         Login.addActionListener(e -> {
-            Player jugador = Xianqi_Logica.juego.inicio_sesion(0, username.getText(), contraseña.getText());
-
-            if (jugador == null) {
+            Player jugador_nuevo = Xianqi_Logica.juego.crear_jugador(username.getText(), contraseña.getText());
+            
+            if (jugador_nuevo == null) {
                 username.setText("");
                 contraseña.setText("");
             } else {
@@ -100,17 +90,15 @@ public class Log_In {
         gbc.anchor = GridBagConstraints.CENTER;
         formPanel.add(Login, gbc);
 
-        log_in.add(Box.createVerticalStrut(1));
-        log_in.add(salir);
-        log_in.add(Box.createVerticalStrut(25));
+        log_in.add(Box.createVerticalStrut(50));
         log_in.add(titulo);
-        log_in.add(Box.createVerticalStrut(30));
+        log_in.add(Box.createVerticalStrut(40));
         log_in.add(formPanel);
         log_in.add(Box.createVerticalStrut(10));
         log_in.add(Login);
         log_in.add(Box.createVerticalStrut(100));
 
-        frame.add(log_in, BorderLayout.CENTER);
+        frame.add(log_in);
         frame.setVisible(true);
-    }
+    }   
 }

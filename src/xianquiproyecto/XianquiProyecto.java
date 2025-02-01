@@ -19,10 +19,14 @@ public class XianquiProyecto {
         menu.Menu_Inicio();
         
         Tablero tab = new Tablero();
-        tab.iniciarTablero();
+        //tab.iniciarTablero();
         
         Log_In login = new Log_In();
-        login.Log_In();
+        //login.Log_In();
+        
+        Crear_Cuenta cuenta = new Crear_Cuenta();
+        //cuenta.Crear_Cuenta();
+        
     }
     
 }
