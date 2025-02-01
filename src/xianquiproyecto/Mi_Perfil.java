@@ -6,14 +6,14 @@ package xianquiproyecto;
 
 import javax.swing.*;
 import java.awt.*;
-
 /**
  *
  * @author river
  */
-public class Menu_Principal {
-
-    public void Menu_Principal() {
+public class Mi_Perfil {
+    
+    public void Mi_Perfil() {
+        
         JFrame pantalla = new JFrame("Xinagqi");
         pantalla.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         pantalla.setSize(500, 400);
@@ -37,8 +37,8 @@ public class Menu_Principal {
         salir.setFont(new Font("Arial", Font.BOLD, 14));
         salir.addActionListener(e -> {
             pantalla.dispose();
-            Menu_Inicio menuI = new Menu_Inicio();
-            menuI.Menu_Inicio();
+            Menu_Principal menuP = new Menu_Principal();
+            menuP.Menu_Principal();
         });
         topPanel.add(salir);
         topPanel.setOpaque(false);
@@ -48,54 +48,34 @@ public class Menu_Principal {
         JLabel titulo = new JLabel(new ImageIcon(imagen));
         titulo.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        JButton jugar = new JButton("Jugar Ghosts");
-        jugar.addActionListener(e -> {
-            String jugador2;
-
-            do {
-                jugador2 = JOptionPane.showInputDialog("Ingrese el nombre del jugador rival.");
-                if (jugador2 == null) {
-                    return;
-                }
-                if (jugador2.equalsIgnoreCase(Xianqi_Logica.juego.jugador1.getUsername())) {
-                    JOptionPane.showMessageDialog(null, "No se puede ingresar el nombre del jugador actual.");
-                }
-            } while (jugador2.equalsIgnoreCase(Xianqi_Logica.juego.jugador1.getUsername()));
-
-            Player jugador = Xianqi_Logica.juego.jugador2(0, jugador2);
-
-            if (jugador != null) {
-                JOptionPane.showMessageDialog(null, "Se ha encontrado al jugador " + jugador.getUsername());
-                pantalla.dispose();
-                Tablero tab = new Tablero();
-                tab.iniciarTablero();
-            } else {
-                JOptionPane.showMessageDialog(null, "No se ha encontrado al jugador. Inténtelo de nuevo.");
-            }
+        JButton datos = new JButton("Ver mi Información");
+        datos.addActionListener(e -> {
+            Player player = new Player(Xianqi_Logica.juego.jugador1.getUsername(), Xianqi_Logica.juego.jugador1.getPassword());
+            JOptionPane.showMessageDialog(null, player.toString());
         });
-        JButton reportes = new JButton("Reportes");
-        reportes.addActionListener(e -> {
-            Reportes report = new Reportes();
-            report.Reportes();
-            pantalla.dispose();
+        JButton cambiar_contraseña = new JButton("Cambiar Contraseña");
+        cambiar_contraseña.addActionListener(e -> {
+            Xianqi_Logica.juego.jugador1.setPassword(JOptionPane.showInputDialog("Ingresa la nueva contraseña:"));
+            JOptionPane.showMessageDialog(null, "Se ha cambiado la contraseña con exito.");
         });
-        JButton perfil = new JButton("Mi Perfil");
-        perfil.addActionListener(e -> {
-            Mi_Perfil mi_perfil = new Mi_Perfil();
-            mi_perfil.Mi_Perfil();
-            pantalla.dispose();
-        });
-        JButton cerrarSesion = new JButton("Cerrar Sesión");
-        cerrarSesion.addActionListener(e -> {
+        JButton eliminar = new JButton("Eliminar Cuenta");
+        eliminar.addActionListener(e -> {
+            Xianqi_Logica.juego.eliminar_cuenta();
             pantalla.dispose();
             Menu_Inicio menuI = new Menu_Inicio();
             menuI.Menu_Inicio();
+        });
+        JButton volver = new JButton("Volver al inicio.");
+        volver.addActionListener(e -> {
+            pantalla.dispose();
+            Menu_Principal menuP = new Menu_Principal();
+            menuP.Menu_Principal();
         });
 
         Dimension buttonSize = new Dimension(200, 40);
         Font buttonFont = new Font("Arial", Font.BOLD, 18);
 
-        for (JButton button : new JButton[]{jugar, reportes, perfil, cerrarSesion}) {
+        for (JButton button : new JButton[]{datos, cambiar_contraseña, eliminar, volver}) {
             button.setMaximumSize(buttonSize);
             button.setFont(buttonFont);
             button.setBackground(Color.YELLOW);
@@ -106,13 +86,13 @@ public class Menu_Principal {
         menu.add(Box.createVerticalStrut(13));
         menu.add(titulo);
         menu.add(Box.createVerticalStrut(30));
-        menu.add(jugar);
+        menu.add(datos);
         menu.add(Box.createVerticalStrut(10));
-        menu.add(reportes);
+        menu.add(cambiar_contraseña);
         menu.add(Box.createVerticalStrut(10));
-        menu.add(perfil);
+        menu.add(eliminar);
         menu.add(Box.createVerticalStrut(10));
-        menu.add(cerrarSesion);
+        menu.add(volver);
         menu.add(Box.createVerticalStrut(100));
 
         pantalla.add(menu);

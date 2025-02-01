@@ -27,6 +27,8 @@ public class XianquiProyecto {
         Crear_Cuenta cuenta = new Crear_Cuenta();
         //cuenta.Crear_Cuenta();
         
+        Menu_Principal menuP = new Menu_Principal();
+        //menuP.Menu_Principal();
     }
     
 }

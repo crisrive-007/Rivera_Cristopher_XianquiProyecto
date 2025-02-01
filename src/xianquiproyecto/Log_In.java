@@ -15,19 +15,24 @@ public class Log_In {
 
     public void Log_In() {
 
-        JFrame frame = new JFrame("Login");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(500, 400);
-        frame.setLocationRelativeTo(null);
-        
-        JButton salir = new JButton("Salir");        
-        salir.setAlignmentX(Component.LEFT_ALIGNMENT);
+        JFrame pantalla = new JFrame("Inicio de Sesion");
+        pantalla.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        pantalla.setSize(500, 400);
+        pantalla.setLocationRelativeTo(null);
+
+        JPanel topPanel = new JPanel();
+        topPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+        JButton salir = new JButton("Salir");
+        salir.setBackground(Color.YELLOW);
+        salir.setForeground(Color.BLACK);
+        salir.setFont(new Font("Arial", Font.BOLD, 14));
         salir.addActionListener(e -> {
             Menu_Inicio menu = new Menu_Inicio();
             menu.Menu_Inicio();
-            frame.dispose();
+            pantalla.dispose();
         });
-
+        topPanel.add(salir);
+        topPanel.setOpaque(false);
 
         JPanel log_in = new JPanel() {
             @Override
@@ -47,7 +52,6 @@ public class Log_In {
         JPanel formPanel = new JPanel();
         formPanel.setLayout(new GridBagLayout());
         formPanel.setOpaque(false);
-
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(10, 10, 10, 10);
         gbc.fill = GridBagConstraints.HORIZONTAL;
@@ -82,15 +86,15 @@ public class Log_In {
         Login.setFont(new Font("Arial", Font.BOLD, 20));
 
         Login.addActionListener(e -> {
-            Player jugador = Xianqi_Logica.juego.inicio_sesion(0, username.getText(), contraseña.getText());
+            Player jugador = Xianqi_Logica.juego.inicio_sesion(0, username.getText(), new String(contraseña.getPassword()));
 
             if (jugador == null) {
                 username.setText("");
                 contraseña.setText("");
             } else {
-                frame.dispose();
-                Menu_Inicio menu = new Menu_Inicio();
-                menu.Menu_Inicio();
+                pantalla.dispose();
+                Menu_Principal menu = new Menu_Principal();
+                menu.Menu_Principal();
             }
         });
 
@@ -100,17 +104,16 @@ public class Log_In {
         gbc.anchor = GridBagConstraints.CENTER;
         formPanel.add(Login, gbc);
 
-        log_in.add(Box.createVerticalStrut(1));
-        log_in.add(salir);
-        log_in.add(Box.createVerticalStrut(25));
+        log_in.add(topPanel);
+        log_in.add(Box.createVerticalStrut(13));
         log_in.add(titulo);
         log_in.add(Box.createVerticalStrut(30));
         log_in.add(formPanel);
         log_in.add(Box.createVerticalStrut(10));
         log_in.add(Login);
-        log_in.add(Box.createVerticalStrut(100));
+        log_in.add(Box.createVerticalStrut(50));
 
-        frame.add(log_in, BorderLayout.CENTER);
-        frame.setVisible(true);
+        pantalla.add(log_in, BorderLayout.CENTER);
+        pantalla.setVisible(true);
     }
 }

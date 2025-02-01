@@ -14,12 +14,26 @@ public class Crear_Cuenta {
     
     public void Crear_Cuenta() {
         
-        JFrame frame = new JFrame("Login");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(500, 400);
-        frame.setLocationRelativeTo(null);
+        JFrame pantalla = new JFrame("Crear Cuenta");
+        pantalla.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        pantalla.setSize(500, 400);
+        pantalla.setLocationRelativeTo(null);
+        
+        JPanel topPanel = new JPanel();
+        topPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+        JButton salir = new JButton("Salir");
+        salir.setBackground(Color.YELLOW);
+        salir.setForeground(Color.BLACK);
+        salir.setFont(new Font("Arial", Font.BOLD, 14));
+        salir.addActionListener(e -> {
+            Menu_Inicio menu = new Menu_Inicio();
+            menu.Menu_Inicio();
+            pantalla.dispose();
+        });
+        topPanel.add(salir);
+        topPanel.setOpaque(false);
 
-        JPanel log_in = new JPanel() {
+        JPanel crear_cuenta = new JPanel() {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
@@ -27,7 +41,7 @@ public class Crear_Cuenta {
                 g.drawImage(fondo.getImage(), 0, 0, getWidth(), getHeight(), this);
             }
         };
-        log_in.setLayout(new BoxLayout(log_in, BoxLayout.Y_AXIS));
+        crear_cuenta.setLayout(new BoxLayout(crear_cuenta, BoxLayout.Y_AXIS));
 
         ImageIcon icon = new ImageIcon(getClass().getResource("/imagenes/XIANGQI.PNG"));
         Image imagen = icon.getImage().getScaledInstance(300, 85, Image.SCALE_SMOOTH);
@@ -66,19 +80,19 @@ public class Crear_Cuenta {
         gbc.gridx = 1;
         formPanel.add(contraseña, gbc);
 
-        JButton Login = new JButton("Crear Cuenta");
-        Login.setBackground(Color.YELLOW);
-        Login.setAlignmentX(Component.CENTER_ALIGNMENT);
-        Login.setFont(new Font("Arial", Font.BOLD, 20));
+        JButton Signup = new JButton("Crear Cuenta");
+        Signup.setBackground(Color.YELLOW);
+        Signup.setAlignmentX(Component.CENTER_ALIGNMENT);
+        Signup.setFont(new Font("Arial", Font.BOLD, 20));
 
-        Login.addActionListener(e -> {
+        Signup.addActionListener(e -> {
             Player jugador_nuevo = Xianqi_Logica.juego.crear_jugador(username.getText(), contraseña.getText());
             
             if (jugador_nuevo == null) {
                 username.setText("");
                 contraseña.setText("");
             } else {
-                frame.dispose();
+                pantalla.dispose();
                 Menu_Inicio menu = new Menu_Inicio();
                 menu.Menu_Inicio();
             }
@@ -88,17 +102,18 @@ public class Crear_Cuenta {
         gbc.gridy = 2;
         gbc.gridwidth = 2;
         gbc.anchor = GridBagConstraints.CENTER;
-        formPanel.add(Login, gbc);
+        formPanel.add(Signup, gbc);
 
-        log_in.add(Box.createVerticalStrut(50));
-        log_in.add(titulo);
-        log_in.add(Box.createVerticalStrut(40));
-        log_in.add(formPanel);
-        log_in.add(Box.createVerticalStrut(10));
-        log_in.add(Login);
-        log_in.add(Box.createVerticalStrut(100));
+        crear_cuenta.add(topPanel);
+        crear_cuenta.add(Box.createVerticalStrut(13));
+        crear_cuenta.add(titulo);
+        crear_cuenta.add(Box.createVerticalStrut(30));
+        crear_cuenta.add(formPanel);
+        crear_cuenta.add(Box.createVerticalStrut(10));
+        crear_cuenta.add(Signup);
+        crear_cuenta.add(Box.createVerticalStrut(50));
 
-        frame.add(log_in);
-        frame.setVisible(true);
+        pantalla.add(crear_cuenta);
+        pantalla.setVisible(true);
     }   
 }

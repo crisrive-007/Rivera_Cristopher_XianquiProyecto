@@ -94,13 +94,12 @@ public class Xianqi_Logica {
         return false;
     }
 
-    public Player jugador2(String username) {
-        for (int i = 0; i < jugadores_registrados; i++) {
-            if (jugadores[i].getUsername().equals(username) && !username.equalsIgnoreCase(String.valueOf(jugador1.getUsername()))) {
-                jugador2 = jugadores[i];
-                return jugadores[i];
-            } else if (username.equalsIgnoreCase(String.valueOf(jugador1.getUsername()))) {
-                JOptionPane.showMessageDialog(null, "No se puede ingresar el nombre del jugador actual.");
+    public Player jugador2(int index, String username) {
+        if (index < jugadores_registrados) {
+            if (jugadores[index].getUsername().equalsIgnoreCase(username)) {
+                return jugadores[index];
+            } else {
+                return jugador2(index + 1, username);
             }
         }
         return null;
