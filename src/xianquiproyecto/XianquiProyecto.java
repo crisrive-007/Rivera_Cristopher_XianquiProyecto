@@ -16,10 +16,10 @@ public class XianquiProyecto {
     public static void main(String[] args) {
         // TODO code application logic here
         Menu_Inicio menu = new Menu_Inicio();
-        menu.Menu_Inicio();
+        //menu.Menu_Inicio();
         
         Tablero tab = new Tablero();
-        //tab.iniciarTablero();
+        tab.iniciarTablero();
         
         Log_In login = new Log_In();
         //login.Log_In();

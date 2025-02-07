@@ -86,7 +86,7 @@ public class Log_In {
         Login.setFont(new Font("Arial", Font.BOLD, 20));
 
         Login.addActionListener(e -> {
-            Player jugador = Xianqi_Logica.juego.inicio_sesion(0, username.getText(), new String(contraseña.getPassword()));
+            Player jugador = Registro.juego.inicio_sesion(0, username.getText(), new String(contraseña.getPassword()));
 
             if (jugador == null) {
                 username.setText("");

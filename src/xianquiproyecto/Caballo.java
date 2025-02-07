@@ -14,6 +14,10 @@ import javax.swing.JButton;
  */
 public class Caballo extends Piezas {
 
+    public Caballo(int fila, int columna, boolean esNegro) {
+        super(fila, columna, esNegro);
+    }
+
     public void mover() {
 
     }
@@ -21,11 +25,11 @@ public class Caballo extends Piezas {
     public void colocarPieza(JButton celda, int fila, int columna) {
         if (fila == 0 && columna == 1 || fila == 0 && columna == 7) {
             ImageIcon ficha = new ImageIcon(getClass().getResource("/imagenes/caballo-negro.PNG"));
-            Image imagen = ficha.getImage().getScaledInstance(65, 65, Image.SCALE_SMOOTH);
+            Image imagen = ficha.getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH);
             celda.setIcon(new ImageIcon(imagen));
-        } else if (fila == 9 && columna == 1 || fila == 9 && columna == 7) {
+        } else if (fila == 10 && columna == 1 || fila == 10 && columna == 7) {
             ImageIcon ficha = new ImageIcon(getClass().getResource("/imagenes/caballo-rojo.PNG"));
-            Image imagen = ficha.getImage().getScaledInstance(65, 65, Image.SCALE_SMOOTH);
+            Image imagen = ficha.getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH);
             celda.setIcon(new ImageIcon(imagen));
         }
     }

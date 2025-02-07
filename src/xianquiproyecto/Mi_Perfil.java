@@ -6,14 +6,15 @@ package xianquiproyecto;
 
 import javax.swing.*;
 import java.awt.*;
+
 /**
  *
  * @author river
  */
 public class Mi_Perfil {
-    
+
     public void Mi_Perfil() {
-        
+
         JFrame pantalla = new JFrame("Xinagqi");
         pantalla.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         pantalla.setSize(500, 400);
@@ -50,20 +51,21 @@ public class Mi_Perfil {
 
         JButton datos = new JButton("Ver mi Información");
         datos.addActionListener(e -> {
-            Player player = new Player(Xianqi_Logica.juego.jugador1.getUsername(), Xianqi_Logica.juego.jugador1.getPassword());
+            Player player = new Player(Registro.juego.jugador1.getUsername(), Registro.juego.jugador1.getPassword());
             JOptionPane.showMessageDialog(null, player.toString());
         });
         JButton cambiar_contraseña = new JButton("Cambiar Contraseña");
         cambiar_contraseña.addActionListener(e -> {
-            Xianqi_Logica.juego.jugador1.setPassword(JOptionPane.showInputDialog("Ingresa la nueva contraseña:"));
+            Registro.juego.jugador1.setPassword(JOptionPane.showInputDialog("Ingresa la nueva contraseña:"));
             JOptionPane.showMessageDialog(null, "Se ha cambiado la contraseña con exito.");
         });
         JButton eliminar = new JButton("Eliminar Cuenta");
         eliminar.addActionListener(e -> {
-            Xianqi_Logica.juego.eliminar_cuenta();
-            pantalla.dispose();
-            Menu_Inicio menuI = new Menu_Inicio();
-            menuI.Menu_Inicio();
+            if (Registro.juego.eliminar_cuenta() == 0) {
+                pantalla.dispose();
+                Menu_Inicio menuI = new Menu_Inicio();
+                menuI.Menu_Inicio();
+            }
         });
         JButton volver = new JButton("Volver al inicio.");
         volver.addActionListener(e -> {

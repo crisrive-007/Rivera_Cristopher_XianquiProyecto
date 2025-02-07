@@ -60,11 +60,11 @@ public class Reportes {
         ranking.setMaximumSize(buttonSize);
         ranking.setFont(new Font("Arial", Font.BOLD, 20));
         ranking.addActionListener(e -> {
-            Xianqi_Logica.juego.ordenar_jugadores();
+            Registro.juego.ordenar_jugadores();
             String ranking_jugadores = "";
             for (int i = 0; i < 10; i++) {
-                if(Xianqi_Logica.juego.jugadores[i] != null) {
-                    ranking_jugadores += Xianqi_Logica.juego.jugadores[i].toString() + "\n";
+                if(Registro.juego.jugadores[i] != null) {
+                    ranking_jugadores += Registro.juego.jugadores[i].toString() + "\n";
                 }
             }
             JOptionPane.showMessageDialog(null, ranking_jugadores);
@@ -72,7 +72,7 @@ public class Reportes {
         historial.setMaximumSize(buttonSize);
         historial.setFont(new Font("Arial", Font.BOLD, 20));
         historial.addActionListener(e -> {
-            String[] logs = Xianqi_Logica.juego.jugador1.getLogs();
+            String[] logs = Registro.juego.jugador1.getLogs();
             StringBuilder partidas = new StringBuilder();
             for (String log : logs) {
                 if (log != null) {

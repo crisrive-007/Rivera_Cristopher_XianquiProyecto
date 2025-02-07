@@ -14,18 +14,24 @@ import javax.swing.JButton;
  */
 public class Soldado extends Piezas{
     
-    public void mover(){
+    int movimientos[] = {fila + 1, columna + 1, columna -1};
+
+    public Soldado(int fila, int columna, boolean esNegro) {
+        super(fila, columna, esNegro);
+    }
+    
+    public void mover(JButton celda, int fila, int columna, boolean esNegro){
         
     }
 
     public void colocarPieza(JButton celda, int fila, int columna) {
         if (fila == 3 && columna == 0 || fila == 3 && columna == 2 || fila == 3 && columna == 4 || fila == 3 && columna == 6 || fila == 3 && columna == 8) {
             ImageIcon ficha = new ImageIcon(getClass().getResource("/imagenes/soldado-negro.PNG"));
-            Image imagen = ficha.getImage().getScaledInstance(65, 65, Image.SCALE_SMOOTH);
+            Image imagen = ficha.getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH);
             celda.setIcon(new ImageIcon(imagen));
-        } else if (fila == 6 && columna == 0 || fila == 6 && columna == 2 || fila == 6 && columna == 4 || fila == 6 && columna == 6 || fila == 6 && columna == 8) {
+        } else if (fila == 7 && columna == 0 || fila == 7 && columna == 2 || fila == 7 && columna == 4 || fila == 7 && columna == 6 || fila == 7 && columna == 8) {
             ImageIcon ficha = new ImageIcon(getClass().getResource("/imagenes/soldado-rojo.PNG"));
-            Image imagen = ficha.getImage().getScaledInstance(65, 65, Image.SCALE_SMOOTH);
+            Image imagen = ficha.getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH);
             celda.setIcon(new ImageIcon(imagen));
         }
     }

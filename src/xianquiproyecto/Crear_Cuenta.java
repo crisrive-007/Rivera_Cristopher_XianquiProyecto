@@ -86,7 +86,7 @@ public class Crear_Cuenta {
         Signup.setFont(new Font("Arial", Font.BOLD, 20));
 
         Signup.addActionListener(e -> {
-            Player jugador_nuevo = Xianqi_Logica.juego.crear_jugador(username.getText(), contraseña.getText());
+            Player jugador_nuevo = Registro.juego.crear_jugador(username.getText(), contraseña.getText());
             
             if (jugador_nuevo == null) {
                 username.setText("");

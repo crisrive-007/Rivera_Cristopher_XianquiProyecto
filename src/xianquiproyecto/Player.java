@@ -4,6 +4,8 @@
  */
 package xianquiproyecto;
 
+import java.util.Calendar;
+
 /**
  *
  * @author river
@@ -12,6 +14,11 @@ public class Player {
     
     public String username, password;
     public int puntos;
+    public Calendar fecha_de_ingreso;
+    public int dia;
+    public int mes;
+    public int año;
+    public boolean activo;
     public int[][] piezas;
     public int cantidad_piezas;
     public int numero;
@@ -22,6 +29,11 @@ public class Player {
         this.username = username;
         this.password = password;
         this.puntos = 0;
+        this.fecha_de_ingreso = Calendar.getInstance();
+        this.dia = fecha_de_ingreso.get(Calendar.DAY_OF_MONTH);
+        this.mes = fecha_de_ingreso.get(Calendar.MONTH) + 1;
+        this.año = fecha_de_ingreso.get(Calendar.YEAR);
+        this.activo = true;
         this.piezas = new int[8][2];
         this.cantidad_piezas = 0;
         this.logs = new String[partidas];
@@ -68,6 +80,6 @@ public class Player {
 
     @Override
     public String toString() {
-        return "Jugador: " + username + ", Puntos: " + puntos;
+        return "Jugador: " + username + "\nPuntos: " + puntos + "\nFecha de Ingreso: " + dia + "/" + mes + "/" + año;
     }
 }

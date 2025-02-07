@@ -10,15 +10,15 @@ import javax.swing.JOptionPane;
  *
  * @author river
  */
-public class Xianqi_Logica {
+public class Registro {
 
     public Player jugador1;
     public Player jugador2;
     public Player jugador_actual = null;
     public Player[] jugadores = new Player[100];
     public int jugadores_registrados = 0;
-    public static Xianqi_Logica juego = new Xianqi_Logica();
-    
+    public static Registro juego = new Registro();
+
     public void ordenar_jugadores() {
         for (int i = 0; i < jugadores.length - 1; i++) {
             for (int j = 0; j < jugadores.length - 1 - i; j++) {
@@ -31,11 +31,14 @@ public class Xianqi_Logica {
         }
     }
 
-    public void eliminar_cuenta() {
-        if (jugador1 != null) {
+    public int eliminar_cuenta() {
+        int eliminar = JOptionPane.showConfirmDialog(null, "Desea eliminar la cuenta?");
+
+        if (eliminar == 0) {
             jugador1.setUsername("");
             jugador1.setPuntos(0);
         }
+        return eliminar;
     }
 
     public Player inicio_sesion(int index, String username, String password) {
@@ -43,7 +46,7 @@ public class Xianqi_Logica {
             JOptionPane.showMessageDialog(null, "Username o contraseña incorrectos.");
             return null;
         }
-        
+
         if (index < jugadores.length) {
             if (jugadores[index].getUsername().equals(username) && jugadores[index].getPassword().equals(password)) {
                 jugador1 = jugadores[index];
