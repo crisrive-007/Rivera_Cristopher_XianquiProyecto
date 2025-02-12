@@ -24,12 +24,16 @@ public class Oficial extends Piezas {
             return false;
         }
 
+        if (esPiezaDelJugadorActualEnPosicion(nuevaFila, nuevaColumna, piezas)) {
+            return false;
+        }
+
         int difFila = Math.abs(nuevaFila - fila);
         int difColumna = Math.abs(nuevaColumna - columna);
 
-        return difFila == 1 && difColumna == 1;
+        return (difFila == 1 && difColumna == 0) || (difFila == 0 && difColumna == 1);
     }
-    
+
     private boolean estaEnPalacio(int fila, int columna) {
         if (esNegro) {
             return fila >= 0 && fila <= 2 && columna >= 3 && columna <= 5;

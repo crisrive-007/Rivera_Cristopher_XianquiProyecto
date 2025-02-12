@@ -21,20 +21,29 @@ public class Soldado extends Piezas {
     @Override
     public boolean esPosicionValida(int nuevaFila, int nuevaColumna, Piezas[][] piezas) {
         int direccion = esNegro ? 1 : -1;
-        
+        boolean esMovimientoValido = false;
+
+        if (esPiezaDelJugadorActualEnPosicion(nuevaFila, nuevaColumna, piezas)) {
+            return false;
+        }
+
         if (columna == nuevaColumna && nuevaFila == fila + direccion) {
-            return true;
+            esMovimientoValido = true;
         }
 
         if ((esNegro && fila >= 5) || (!esNegro && fila <= 4)) {
             if (nuevaFila == fila && Math.abs(nuevaColumna - columna) == 1) {
-                return true;
+                esMovimientoValido = true;
             }
         }
 
-        return false;
+        if (nuevaFila < 0 || nuevaFila >= 10 || nuevaColumna < 0 || nuevaColumna >= 9) {
+            return false;
+        }
+
+        return esMovimientoValido;
     }
-    
+
     @Override
     public void colocarPieza(JButton celda, int fila, int columna) {
         if (esNegro) {

@@ -24,6 +24,10 @@ public class Cañon extends Piezas {
             return false;
         }
 
+        if (esPiezaDelJugadorActualEnPosicion(nuevaFila, nuevaColumna, piezas)) {
+            return false;
+        }
+
         int contadorPiezas = 0;
 
         if (fila == nuevaFila) {
@@ -37,10 +41,12 @@ public class Cañon extends Piezas {
             }
 
             if (piezas[nuevaFila][nuevaColumna] != null) {
-                contadorPiezas++;
+                if (!esPiezaDelJugadorActualEnPosicion(nuevaFila, nuevaColumna, piezas)) {
+                    contadorPiezas++;
+                } else {
+                    return false;
+                }
             }
-
-            return (contadorPiezas == 0 || contadorPiezas == 1);
 
         } else {
             int menor = Math.min(fila, nuevaFila);
@@ -53,11 +59,15 @@ public class Cañon extends Piezas {
             }
 
             if (piezas[nuevaFila][nuevaColumna] != null) {
-                contadorPiezas++;
+                if (!esPiezaDelJugadorActualEnPosicion(nuevaFila, nuevaColumna, piezas)) {
+                    contadorPiezas++;
+                } else {
+                    return false;
+                }
             }
-
-            return (contadorPiezas == 0 || contadorPiezas == 1);
         }
+
+        return (contadorPiezas == 0 || contadorPiezas == 1);
     }
     
     @Override

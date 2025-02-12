@@ -36,6 +36,14 @@ public abstract class Piezas {
         piezas[nuevaFila][nuevaColumna] = this;
         
     }
+    
+    public boolean esPiezaDelJugadorActualEnPosicion(int fila, int columna, Piezas[][] piezas) {
+        Piezas pieza = piezas[fila][columna];
+        if (pieza != null) {
+            return pieza.esPiezaDelJugadorActual();
+        }
+        return false;
+    }
 
     public boolean esPiezaDelJugadorActual() {
         return (esNegro && Jugadores.juego.jugador_actual == Jugadores.juego.jugador1)
