@@ -13,21 +13,38 @@ import javax.swing.JButton;
  * @author river
  */
 public class Oficial extends Piezas {
-
+    
     public Oficial(int fila, int columna, boolean esNegro) {
         super(fila, columna, esNegro);
     }
+    
+    @Override
+    public boolean esPosicionValida(int nuevaFila, int nuevaColumna, Piezas[][] piezas) {
+        if (!estaEnPalacio(nuevaFila, nuevaColumna)) {
+            return false;
+        }
 
-    public void mover() {
+        int difFila = Math.abs(nuevaFila - fila);
+        int difColumna = Math.abs(nuevaColumna - columna);
 
+        return difFila == 1 && difColumna == 1;
     }
-
+    
+    private boolean estaEnPalacio(int fila, int columna) {
+        if (esNegro) {
+            return fila >= 0 && fila <= 2 && columna >= 3 && columna <= 5;
+        } else {
+            return fila >= 7 && fila <= 9 && columna >= 3 && columna <= 5;
+        }
+    }
+    
+    @Override
     public void colocarPieza(JButton celda, int fila, int columna) {
-        if (fila == 0 && columna == 3 || fila == 0 && columna == 5) {
+        if (esNegro) {
             ImageIcon icon = new ImageIcon(getClass().getResource("/imagenes/oficial-negro.PNG"));
             Image imagen = icon.getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH);
             celda.setIcon(new ImageIcon(imagen));
-        } else if (fila == 10 && columna == 3 || fila == 10 && columna == 5) {
+        } else if (!esNegro) {
             ImageIcon ficha = new ImageIcon(getClass().getResource("/imagenes/oficial-rojo.PNG"));
             Image imagen = ficha.getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH);
             celda.setIcon(new ImageIcon(imagen));

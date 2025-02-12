@@ -18,16 +18,28 @@ public class Caballo extends Piezas {
         super(fila, columna, esNegro);
     }
 
-    public void mover() {
+    @Override
+    public boolean esPosicionValida(int nuevaFila, int nuevaColumna, Piezas[][] piezas) {
+        int difFila = Math.abs(nuevaFila - fila);
+        int difColumna = Math.abs(nuevaColumna - columna);
 
+        if (!((difFila == 2 && difColumna == 1) || (difFila == 1 && difColumna == 2))) {
+            return false;
+        }
+
+        int filaIntermedia = (difFila == 2) ? (fila + nuevaFila) / 2 : fila;
+        int columnaIntermedia = (difColumna == 2) ? (columna + nuevaColumna) / 2 : columna;
+
+        return piezas[filaIntermedia][columnaIntermedia] == null;
     }
-
+    
+    @Override
     public void colocarPieza(JButton celda, int fila, int columna) {
-        if (fila == 0 && columna == 1 || fila == 0 && columna == 7) {
+        if (esNegro) {
             ImageIcon ficha = new ImageIcon(getClass().getResource("/imagenes/caballo-negro.PNG"));
             Image imagen = ficha.getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH);
             celda.setIcon(new ImageIcon(imagen));
-        } else if (fila == 10 && columna == 1 || fila == 10 && columna == 7) {
+        } else if (!esNegro) {
             ImageIcon ficha = new ImageIcon(getClass().getResource("/imagenes/caballo-rojo.PNG"));
             Image imagen = ficha.getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH);
             celda.setIcon(new ImageIcon(imagen));

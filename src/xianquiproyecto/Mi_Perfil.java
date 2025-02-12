@@ -51,17 +51,17 @@ public class Mi_Perfil {
 
         JButton datos = new JButton("Ver mi Información");
         datos.addActionListener(e -> {
-            Player player = new Player(Registro.juego.jugador1.getUsername(), Registro.juego.jugador1.getPassword());
+            Player player = new Player(Jugadores.juego.jugador1.getUsername(), Jugadores.juego.jugador1.getPassword());
             JOptionPane.showMessageDialog(null, player.toString());
         });
         JButton cambiar_contraseña = new JButton("Cambiar Contraseña");
         cambiar_contraseña.addActionListener(e -> {
-            Registro.juego.jugador1.setPassword(JOptionPane.showInputDialog("Ingresa la nueva contraseña:"));
+            Jugadores.juego.jugador1.setPassword(JOptionPane.showInputDialog("Ingresa la nueva contraseña:"));
             JOptionPane.showMessageDialog(null, "Se ha cambiado la contraseña con exito.");
         });
         JButton eliminar = new JButton("Eliminar Cuenta");
         eliminar.addActionListener(e -> {
-            if (Registro.juego.eliminar_cuenta() == 0) {
+            if (Jugadores.juego.eliminar_cuenta() == 0) {
                 pantalla.dispose();
                 Menu_Inicio menuI = new Menu_Inicio();
                 menuI.Menu_Inicio();

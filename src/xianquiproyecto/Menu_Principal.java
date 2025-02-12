@@ -57,12 +57,12 @@ public class Menu_Principal {
                 if (jugador2 == null) {
                     return;
                 }
-                if (jugador2.equalsIgnoreCase(Registro.juego.jugador1.getUsername())) {
+                if (jugador2.equalsIgnoreCase(Jugadores.juego.jugador1.getUsername())) {
                     JOptionPane.showMessageDialog(null, "No se puede ingresar el nombre del jugador actual.");
                 }
-            } while (jugador2.equalsIgnoreCase(Registro.juego.jugador1.getUsername()));
+            } while (jugador2.equalsIgnoreCase(Jugadores.juego.jugador1.getUsername()));
 
-            Player jugador = Registro.juego.jugador2(0, jugador2);
+            Player jugador = Jugadores.juego.jugador2(0, jugador2);
 
             if (jugador != null) {
                 JOptionPane.showMessageDialog(null, "Se ha encontrado al jugador " + jugador.getUsername());

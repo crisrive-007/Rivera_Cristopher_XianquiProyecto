@@ -12,24 +12,36 @@ import javax.swing.JButton;
  *
  * @author river
  */
-public class Soldado extends Piezas{
-    
-    int movimientos[] = {fila + 1, columna + 1, columna -1};
+public class Soldado extends Piezas {
 
     public Soldado(int fila, int columna, boolean esNegro) {
         super(fila, columna, esNegro);
     }
-    
-    public void mover(JButton celda, int fila, int columna, boolean esNegro){
-        
-    }
 
+    @Override
+    public boolean esPosicionValida(int nuevaFila, int nuevaColumna, Piezas[][] piezas) {
+        int direccion = esNegro ? 1 : -1;
+        
+        if (columna == nuevaColumna && nuevaFila == fila + direccion) {
+            return true;
+        }
+
+        if ((esNegro && fila >= 5) || (!esNegro && fila <= 4)) {
+            if (nuevaFila == fila && Math.abs(nuevaColumna - columna) == 1) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+    
+    @Override
     public void colocarPieza(JButton celda, int fila, int columna) {
-        if (fila == 3 && columna == 0 || fila == 3 && columna == 2 || fila == 3 && columna == 4 || fila == 3 && columna == 6 || fila == 3 && columna == 8) {
+        if (esNegro) {
             ImageIcon ficha = new ImageIcon(getClass().getResource("/imagenes/soldado-negro.PNG"));
             Image imagen = ficha.getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH);
             celda.setIcon(new ImageIcon(imagen));
-        } else if (fila == 7 && columna == 0 || fila == 7 && columna == 2 || fila == 7 && columna == 4 || fila == 7 && columna == 6 || fila == 7 && columna == 8) {
+        } else if (!esNegro) {
             ImageIcon ficha = new ImageIcon(getClass().getResource("/imagenes/soldado-rojo.PNG"));
             Image imagen = ficha.getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH);
             celda.setIcon(new ImageIcon(imagen));

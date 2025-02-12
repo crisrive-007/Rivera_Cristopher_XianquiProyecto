@@ -10,14 +10,14 @@ import javax.swing.JOptionPane;
  *
  * @author river
  */
-public class Registro {
+public class Jugadores {
 
     public Player jugador1;
     public Player jugador2;
     public Player jugador_actual = null;
     public Player[] jugadores = new Player[100];
     public int jugadores_registrados = 0;
-    public static Registro juego = new Registro();
+    public static Jugadores juego = new Jugadores();
 
     public void ordenar_jugadores() {
         for (int i = 0; i < jugadores.length - 1; i++) {
@@ -100,12 +100,22 @@ public class Registro {
     public Player jugador2(int index, String username) {
         if (index < jugadores_registrados) {
             if (jugadores[index].getUsername().equalsIgnoreCase(username)) {
+                jugador2 = jugadores[index];
                 return jugadores[index];
             } else {
                 return jugador2(index + 1, username);
             }
         }
         return null;
+    }
+
+    public void cambio_turno() {
+        if (jugador_actual == jugador1) {
+            this.jugador_actual = jugador2;
+        } else {
+            this.jugador_actual = jugador1;
+        }
+        JOptionPane.showMessageDialog(null, "Es el turno de: " + jugador_actual.getUsername());
     }
 
 }

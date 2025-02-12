@@ -11,7 +11,7 @@ import java.util.Calendar;
  * @author river
  */
 public class Player {
-    
+
     public String username, password;
     public int puntos;
     public Calendar fecha_de_ingreso;
@@ -24,7 +24,7 @@ public class Player {
     public int numero;
     public String[] logs;
     public static final int partidas = 10;
-    
+
     public Player(String username, String password) {
         this.username = username;
         this.password = password;
@@ -38,7 +38,7 @@ public class Player {
         this.cantidad_piezas = 0;
         this.logs = new String[partidas];
     }
-    
+
     public String getUsername() {
         return username;
     }
@@ -62,7 +62,15 @@ public class Player {
     public void setPuntos(int puntos) {
         this.puntos = puntos;
     }
-    
+
+    public void agregarPieza(int fila, int columna) {
+        if (cantidad_piezas < piezas.length) {
+            piezas[cantidad_piezas][0] = fila;
+            piezas[cantidad_piezas][1] = columna;
+            cantidad_piezas++;
+        }
+    }
+
     public void añadir_log(String log) {
         for (int i = partidas - 1; i > 0; i--) {
             logs[i] = logs[i - 1];
