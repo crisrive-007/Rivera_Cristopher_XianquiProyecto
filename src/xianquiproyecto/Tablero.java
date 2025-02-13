@@ -11,7 +11,7 @@ import javax.swing.*;
  *
  * @author river
  */
-public class Tablero {
+public final class Tablero {
 
     private final JButton[][] celdas = new JButton[10][9];
     private final Piezas[][] piezas = new Piezas[10][9];
@@ -23,8 +23,8 @@ public class Tablero {
     public void iniciarTablero() {
         pantalla = new JFrame("Xiangqi - Nueva partida");
         pantalla.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        pantalla.setSize(700, 800);
-        pantalla.setBackground(Color.decode("#c05e10"));
+        pantalla.setSize(1180, 810);
+        pantalla.setBackground(Color.decode("#891c00"));
         pantalla.setLocationRelativeTo(null);
 
         JPanel tablero = new JPanel(new BorderLayout());
@@ -32,10 +32,10 @@ public class Tablero {
 
         casillasSuperior = new JPanel(new GridLayout(5, 9));
         casillasInferior = new JPanel(new GridLayout(5, 9));
-        casillasSuperior.setPreferredSize(new Dimension(500, 350));
-        casillasInferior.setPreferredSize(new Dimension(500, 350));
-        casillasSuperior.setBorder(BorderFactory.createLineBorder(Color.decode("#891c00"), 5));
-        casillasInferior.setBorder(BorderFactory.createLineBorder(Color.decode("#891c00"), 5));
+        casillasSuperior.setPreferredSize(new Dimension(420, 335));
+        casillasInferior.setPreferredSize(new Dimension(420, 335));
+        casillasSuperior.setBackground(Color.decode("#891c00"));
+        casillasInferior.setBackground(Color.decode("#891c00"));
 
         for (int fila = 0; fila < 10; fila++) {
             for (int columna = 0; columna < 9; columna++) {
@@ -50,21 +50,80 @@ public class Tablero {
         }
 
         JPanel contenedorCasillas = new JPanel(new BorderLayout());
+        contenedorCasillas.setBackground(Color.CYAN);
         contenedorCasillas.add(casillasSuperior, BorderLayout.NORTH);
-        contenedorCasillas.add(Box.createRigidArea(new Dimension(0, 20)), BorderLayout.CENTER); // Espacio del río
+        contenedorCasillas.add(Box.createRigidArea(new Dimension(0, 20)), BorderLayout.CENTER);
         contenedorCasillas.add(casillasInferior, BorderLayout.SOUTH);
 
-        tablero.add(crearPanelNumeros(true), BorderLayout.WEST);
-        tablero.add(crearPanelNumeros(false), BorderLayout.EAST);
+        JPanel panelIzquierdo = new JPanel();
+        panelIzquierdo.setPreferredSize(new Dimension(255, 0));
+        panelIzquierdo.setBackground(Color.LIGHT_GRAY);
+        panelIzquierdo.setLayout(new BoxLayout(panelIzquierdo, BoxLayout.Y_AXIS));
+
+        JLabel labelJugador1 = new JLabel("Jugador 1: " + Jugadores.juego.jugador1.getUsername(), SwingConstants.CENTER);
+        labelJugador1.setFont(new Font("Arial", Font.BOLD, 18));
+        labelJugador1.setForeground(Color.BLACK);
+        panelIzquierdo.add(labelJugador1);
+
+        panelIzquierdo.add(Box.createVerticalStrut(20));
+
+        JLabel piezasCapturadas1 = new JLabel("Capturas:", SwingConstants.CENTER);
+        piezasCapturadas1.setFont(new Font("Arial", Font.BOLD, 16));
+        piezasCapturadas1.setForeground(Color.BLACK);
+        panelIzquierdo.add(piezasCapturadas1);
+        
+        JPanel capturasJugador1 = new JPanel(new GridLayout(5, 2));
+        capturasJugador1.setBackground(Color.LIGHT_GRAY);
+        panelIzquierdo.add(capturasJugador1, BorderLayout.CENTER);
+
+        JPanel panelDerecho = new JPanel();
+        panelDerecho.setPreferredSize(new Dimension(255, 0));
+        panelDerecho.setBackground(Color.LIGHT_GRAY);
+        panelDerecho.setLayout(new BoxLayout(panelDerecho, BoxLayout.Y_AXIS));
+
+        JLabel labelJugador2 = new JLabel("Jugador 2: " + Jugadores.juego.jugador2.getUsername(), SwingConstants.CENTER);
+        labelJugador2.setFont(new Font("Arial", Font.BOLD, 18));
+        labelJugador2.setForeground(Color.BLACK);
+        panelDerecho.add(labelJugador2);
+        
+        panelDerecho.add(Box.createVerticalStrut(20));
+
+        JLabel piezasCapturadas2 = new JLabel("Capturas:", SwingConstants.CENTER);
+        piezasCapturadas2.setFont(new Font("Arial", Font.BOLD, 16));
+        piezasCapturadas2.setForeground(Color.BLACK);
+        panelDerecho.add(piezasCapturadas2);
+        
+        JPanel capturasJugador2 = new JPanel(new GridLayout(5, 2));
+        capturasJugador2.setBackground(Color.LIGHT_GRAY);
+        panelDerecho.add(capturasJugador2, BorderLayout.CENTER);
+
+        tablero.add(crearPanelNumeros(), BorderLayout.WEST);
+        tablero.add(crearPanelNumeros(), BorderLayout.EAST);
         tablero.add(crearPanelLetras(), BorderLayout.NORTH);
         tablero.add(crearPanelLetras(), BorderLayout.SOUTH);
         tablero.add(contenedorCasillas, BorderLayout.CENTER);
 
-        pantalla.add(tablero);
+        JButton botonSalir = new JButton("Salir");
+        botonSalir.setFont(new Font("Arial", Font.BOLD, 16));
+        botonSalir.setBackground(Color.decode("#891c00"));
+        botonSalir.setForeground(Color.WHITE);
+        botonSalir.addActionListener(e -> pantalla.dispose());
+
+        JPanel panelBoton = new JPanel();
+        panelBoton.setBackground(Color.LIGHT_GRAY);
+        panelBoton.add(botonSalir);
+
+        pantalla.setLayout(new BorderLayout());
+        pantalla.add(panelIzquierdo, BorderLayout.WEST);
+        pantalla.add(tablero, BorderLayout.CENTER);
+        pantalla.add(panelDerecho, BorderLayout.EAST);
+        pantalla.add(panelBoton, BorderLayout.SOUTH);
+
         pantalla.setVisible(true);
 
         colocarPiezasIniciales();
         Jugadores.juego.jugador_actual = Jugadores.juego.jugador1;
+        JOptionPane.showMessageDialog(null, Jugadores.juego.turno());
     }
 
     private JButton crearCelda(int fila, int columna) {
@@ -77,7 +136,7 @@ public class Tablero {
         return celda;
     }
 
-    private JPanel crearPanelNumeros(boolean izquierda) {
+    private JPanel crearPanelNumeros() {
         JPanel panel = new JPanel(new GridLayout(10, 1));
         panel.setBackground(Color.decode("#891c00"));
         for (int i = 10; i >= 1; i--) {
@@ -142,17 +201,15 @@ public class Tablero {
                     Piezas pieza = piezas[fila][columna];
                     if (pieza != null) {
                         if (pieza.esNegro) {
-                            if (Jugadores.juego.jugador1 != null) {
-                                Jugadores.juego.jugador1.agregarPieza(fila, columna);
-                            }
-                        } else {
                             if (Jugadores.juego.jugador2 != null) {
                                 Jugadores.juego.jugador2.agregarPieza(fila, columna);
                             }
+                        } else {
+                            if (Jugadores.juego.jugador1 != null) {
+                                Jugadores.juego.jugador1.agregarPieza(fila, columna);
+                            }
                         }
                         pieza.colocarPieza(celdas[fila][columna], fila, columna);
-                    } else {
-                        System.out.println("La pieza en: (" + fila + ", " + columna + ") es null.");
                     }
                 }
             }
@@ -169,6 +226,12 @@ public class Tablero {
             }
         } else {
             if (piezaSeleccionada.esPosicionValida(fila, columna, piezas)) {
+                Piezas piezaCapturada = piezas[fila][columna];
+
+                if (piezaCapturada != null && piezaCapturada.esNegro != piezaSeleccionada.esNegro) {
+                    piezaSeleccionada.capturarPieza(fila, columna, piezas, celdas, piezaCapturada);
+                }
+
                 piezas[piezaSeleccionada.fila][piezaSeleccionada.columna] = null;
                 piezas[fila][columna] = piezaSeleccionada;
 

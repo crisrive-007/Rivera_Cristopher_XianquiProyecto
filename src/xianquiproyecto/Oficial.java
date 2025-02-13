@@ -13,35 +13,23 @@ import javax.swing.JButton;
  * @author river
  */
 public class Oficial extends Piezas {
-    
+
     public Oficial(int fila, int columna, boolean esNegro) {
         super(fila, columna, esNegro);
     }
-    
+
     @Override
     public boolean esPosicionValida(int nuevaFila, int nuevaColumna, Piezas[][] piezas) {
-        if (!estaEnPalacio(nuevaFila, nuevaColumna)) {
-            return false;
-        }
-
-        if (esPiezaDelJugadorActualEnPosicion(nuevaFila, nuevaColumna, piezas)) {
+        if (!super.estaEnPalacio(nuevaFila, nuevaColumna)) {
             return false;
         }
 
         int difFila = Math.abs(nuevaFila - fila);
         int difColumna = Math.abs(nuevaColumna - columna);
 
-        return (difFila == 1 && difColumna == 0) || (difFila == 0 && difColumna == 1);
+        return difFila == 1 && difColumna == 1;
     }
 
-    private boolean estaEnPalacio(int fila, int columna) {
-        if (esNegro) {
-            return fila >= 0 && fila <= 2 && columna >= 3 && columna <= 5;
-        } else {
-            return fila >= 7 && fila <= 9 && columna >= 3 && columna <= 5;
-        }
-    }
-    
     @Override
     public void colocarPieza(JButton celda, int fila, int columna) {
         if (esNegro) {
@@ -54,4 +42,5 @@ public class Oficial extends Piezas {
             celda.setIcon(new ImageIcon(imagen));
         }
     }
+
 }

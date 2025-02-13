@@ -39,15 +39,15 @@ public class Player {
         this.logs = new String[partidas];
     }
 
-    public String getUsername() {
+    public final String getUsername() {
         return username;
     }
 
-    public void setUsername(String username) {
+    public final void setUsername(String username) {
         this.username = username;
     }
 
-    public String getPassword() {
+    public final String getPassword() {
         return password;
     }
 
@@ -67,8 +67,20 @@ public class Player {
         if (cantidad_piezas < piezas.length) {
             piezas[cantidad_piezas][0] = fila;
             piezas[cantidad_piezas][1] = columna;
-            cantidad_piezas++;
+            this.cantidad_piezas++;
         }
+    }
+    
+    public void eliminarPieza(int fila, int columna) {
+        for (int i = 0; i < cantidad_piezas; i++) {
+            if (piezas[i][0] == fila && piezas[i][1] == columna) {
+                for (int j = i; j < cantidad_piezas - 1; j++) {
+                    piezas[j][0] = piezas[j + 1][0];
+                    piezas[j][1] = piezas[j + 1][1];
+                }
+            }
+        }
+        cantidad_piezas--;
     }
 
     public void añadir_log(String log) {

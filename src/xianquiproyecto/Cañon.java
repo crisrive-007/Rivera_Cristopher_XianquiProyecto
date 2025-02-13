@@ -41,12 +41,10 @@ public class Cañon extends Piezas {
             }
 
             if (piezas[nuevaFila][nuevaColumna] != null) {
-                if (!esPiezaDelJugadorActualEnPosicion(nuevaFila, nuevaColumna, piezas)) {
-                    contadorPiezas++;
-                } else {
-                    return false;
-                }
+                contadorPiezas++;
             }
+
+            return (contadorPiezas == 0 || contadorPiezas == 1);
 
         } else {
             int menor = Math.min(fila, nuevaFila);
@@ -59,17 +57,13 @@ public class Cañon extends Piezas {
             }
 
             if (piezas[nuevaFila][nuevaColumna] != null) {
-                if (!esPiezaDelJugadorActualEnPosicion(nuevaFila, nuevaColumna, piezas)) {
-                    contadorPiezas++;
-                } else {
-                    return false;
-                }
+                contadorPiezas++;
             }
-        }
 
-        return (contadorPiezas == 0 || contadorPiezas == 1);
+            return (contadorPiezas == 0 || contadorPiezas == 1);
+        }
     }
-    
+
     @Override
     public void colocarPieza(JButton celda, int fila, int columna) {
         if (esNegro) {

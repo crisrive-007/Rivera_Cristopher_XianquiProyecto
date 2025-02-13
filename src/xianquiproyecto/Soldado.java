@@ -21,27 +21,22 @@ public class Soldado extends Piezas {
     @Override
     public boolean esPosicionValida(int nuevaFila, int nuevaColumna, Piezas[][] piezas) {
         int direccion = esNegro ? 1 : -1;
-        boolean esMovimientoValido = false;
 
         if (esPiezaDelJugadorActualEnPosicion(nuevaFila, nuevaColumna, piezas)) {
             return false;
         }
 
         if (columna == nuevaColumna && nuevaFila == fila + direccion) {
-            esMovimientoValido = true;
+            return true;
         }
 
         if ((esNegro && fila >= 5) || (!esNegro && fila <= 4)) {
             if (nuevaFila == fila && Math.abs(nuevaColumna - columna) == 1) {
-                esMovimientoValido = true;
+                return true;
             }
         }
 
-        if (nuevaFila < 0 || nuevaFila >= 10 || nuevaColumna < 0 || nuevaColumna >= 9) {
-            return false;
-        }
-
-        return esMovimientoValido;
+        return false;
     }
 
     @Override

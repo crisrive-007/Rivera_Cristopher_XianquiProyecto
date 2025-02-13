@@ -13,30 +13,30 @@ import javax.swing.JButton;
  * @author river
  */
 public class Elefante extends Piezas {
-    
+
     public Elefante(int fila, int columna, boolean esNegro) {
         super(fila, columna, esNegro);
     }
-    
+
     @Override
     public boolean esPosicionValida(int nuevaFila, int nuevaColumna, Piezas[][] piezas) {
-        if (esPiezaDelJugadorActualEnPosicion(nuevaFila, nuevaColumna, piezas)) {
-            return false;
+        if (nuevaFila == 5) {
+            nuevaFila = 6;
         }
-        
+
         if (Math.abs(nuevaFila - fila) == 2 && Math.abs(nuevaColumna - columna) == 2) {
             int filaIntermedia = (fila + nuevaFila) / 2;
             int columnaIntermedia = (columna + nuevaColumna) / 2;
 
             if (piezas[filaIntermedia][columnaIntermedia] == null) {
-                if ((esNegro && nuevaFila <= 5) || (!esNegro && nuevaFila >= 6)) {
+                if ((esNegro && nuevaFila <= 5) || (!esNegro && nuevaFila >= 7)) {
                     return true;
                 }
             }
         }
         return false;
     }
-    
+
     @Override
     public void colocarPieza(JButton celda, int fila, int columna) {
         if (esNegro) {

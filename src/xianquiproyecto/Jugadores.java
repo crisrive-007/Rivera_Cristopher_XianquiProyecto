@@ -115,7 +115,11 @@ public class Jugadores {
         } else {
             this.jugador_actual = jugador1;
         }
-        JOptionPane.showMessageDialog(null, "Es el turno de: " + jugador_actual.getUsername());
+        JOptionPane.showMessageDialog(null, turno());
+    }
+    
+    public String turno() {
+        return "Es turno del jugador: " + jugador_actual.getUsername();
     }
 
 }

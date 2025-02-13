@@ -34,11 +34,7 @@ public class Caballo extends Piezas {
         int filaIntermedia = (difFila == 2) ? (fila + nuevaFila) / 2 : fila;
         int columnaIntermedia = (difColumna == 2) ? (columna + nuevaColumna) / 2 : columna;
 
-        if (piezas[filaIntermedia][columnaIntermedia] != null) {
-            return false;
-        }
-
-        return !esPiezaDelJugadorActualEnPosicion(nuevaFila, nuevaColumna, piezas);
+        return piezas[filaIntermedia][columnaIntermedia] == null;
     }
     
     @Override

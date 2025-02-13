@@ -6,6 +6,7 @@ package xianquiproyecto;
 
 import java.awt.Color;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -35,8 +36,13 @@ public abstract class Piezas {
         this.columna = nuevaColumna;
         piezas[nuevaFila][nuevaColumna] = this;
         
+        if (LogicaDeVictoria.victoria.gameOver(piezas)) {
+            String ganador = this.esNegro ? "Jugador 2 (Negro)" : "Jugador 1 (Rojo)";
+            JOptionPane.showMessageDialog(null, ganador + " ha ganado la partida!");
+            System.exit(0);
+        }
     }
-    
+
     public boolean esPiezaDelJugadorActualEnPosicion(int fila, int columna, Piezas[][] piezas) {
         Piezas pieza = piezas[fila][columna];
         if (pieza != null) {
@@ -45,9 +51,17 @@ public abstract class Piezas {
         return false;
     }
 
+    public boolean estaEnPalacio(int fila, int columna) {
+        if (esNegro) {
+            return fila >= 0 && fila <= 2 && columna >= 3 && columna <= 5;
+        } else {
+            return fila >= 7 && fila <= 9 && columna >= 3 && columna <= 5;
+        }
+    }
+
     public boolean esPiezaDelJugadorActual() {
-        return (esNegro && Jugadores.juego.jugador_actual == Jugadores.juego.jugador1)
-                || (!esNegro && Jugadores.juego.jugador_actual == Jugadores.juego.jugador2);
+        return (esNegro && Jugadores.juego.jugador_actual == Jugadores.juego.jugador2)
+                || (!esNegro && Jugadores.juego.jugador_actual == Jugadores.juego.jugador1);
     }
 
     public void resaltarMovimientosValidos(Piezas piezaSeleccionada, Piezas[][] piezas, JButton[][] celdas, int fila, int columna) {
@@ -77,5 +91,14 @@ public abstract class Piezas {
                 }
             }
         }
+    }
+
+    public void capturarPieza(int nuevaFila, int nuevaColumna, Piezas[][] piezas, JButton[][] celdas, Piezas piezaCapturada) {
+        if (piezaCapturada.esNegro) {
+            Jugadores.juego.jugador1.eliminarPieza(nuevaFila, nuevaColumna);
+        } else {
+            Jugadores.juego.jugador2.eliminarPieza(nuevaFila, nuevaColumna);
+        }
+        moverPieza(nuevaFila, nuevaColumna, piezas, celdas);
     }
 }
