@@ -4,21 +4,32 @@
  */
 package xianquiproyecto;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author river
  */
 public class LogicaDeVictoria {
-    
+
     public static LogicaDeVictoria victoria = new LogicaDeVictoria();
-    
+    protected boolean finDelJuego;
+
+    public LogicaDeVictoria() {
+        this.finDelJuego = false;
+    }
+
     public boolean gameOver(Piezas[][] piezas) {
-        if (verificarFinDePartida(piezas)) {
-            return true;
+        if (finDelJuego == false) {
+            if (verificarFinDePartida(piezas) == true) {
+                Menu_Principal menu = new Menu_Principal();
+                menu.Menu_Principal();
+                return true;
+            }
         }
         return false;
     }
-    
+
     public boolean verificarFinDePartida(Piezas[][] piezas) {
         boolean generalRojoVivo = false;
         boolean generalNegroVivo = false;
@@ -37,14 +48,17 @@ public class LogicaDeVictoria {
         }
 
         if (!generalRojoVivo) {
-            System.out.println("¡El jugador negro gana!");
+            JOptionPane.showMessageDialog(null, "¡El jugador " + Jugadores.juego.jugador2.getUsername() + " gana!");
+            Jugadores.juego.jugador2.añadir_log("¡El jugador " + Jugadores.juego.jugador2.getUsername() + " gana porque se ha comido el general rojo.!");
+            Jugadores.juego.jugador1.añadir_log("¡El jugador " + Jugadores.juego.jugador1.getUsername() + " pierde porque se han comido a su general!");
             return true;
         } else if (!generalNegroVivo) {
-            System.out.println("¡El jugador rojo gana!");
+            JOptionPane.showMessageDialog(null, "¡El jugador " + Jugadores.juego.jugador1.getUsername() + " gana!");
+            Jugadores.juego.jugador1.añadir_log("¡El jugador " + Jugadores.juego.jugador1.getUsername() + " gana porque se ha comido el general negro.!");
+            Jugadores.juego.jugador2.añadir_log("¡El jugador " + Jugadores.juego.jugador2.getUsername() + " pierde porque se han comido a su general!");
             return true;
         }
 
         return false;
     }
 }
-

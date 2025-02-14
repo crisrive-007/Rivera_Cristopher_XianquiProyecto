@@ -17,11 +17,13 @@ public abstract class Piezas {
     protected int fila;
     protected int columna;
     protected boolean esNegro;
+    protected boolean capturada;
 
     public Piezas(int fila, int columna, boolean esNegro) {
         this.fila = fila;
         this.columna = columna;
         this.esNegro = esNegro;
+        this.capturada = false;
     }
 
     public abstract boolean esPosicionValida(int nuevaFila, int nuevaColumna, Piezas[][] piezas);
@@ -35,12 +37,6 @@ public abstract class Piezas {
         this.fila = nuevaFila;
         this.columna = nuevaColumna;
         piezas[nuevaFila][nuevaColumna] = this;
-        
-        if (LogicaDeVictoria.victoria.gameOver(piezas)) {
-            String ganador = this.esNegro ? "Jugador 2 (Negro)" : "Jugador 1 (Rojo)";
-            JOptionPane.showMessageDialog(null, ganador + " ha ganado la partida!");
-            System.exit(0);
-        }
     }
 
     public boolean esPiezaDelJugadorActualEnPosicion(int fila, int columna, Piezas[][] piezas) {
@@ -99,6 +95,8 @@ public abstract class Piezas {
         } else {
             Jugadores.juego.jugador2.eliminarPieza(nuevaFila, nuevaColumna);
         }
+        piezaCapturada.capturada = true;
+        //Tablero.tab.agregarPiezaCapturada(piezaCapturada);
         moverPieza(nuevaFila, nuevaColumna, piezas, celdas);
     }
 }

@@ -18,7 +18,7 @@ public class XianquiProyecto {
         Menu_Inicio menu = new Menu_Inicio();
         menu.Menu_Inicio();
         
-        Tablero tab = new Tablero();
+        //Tablero tab = new Tablero();
         //tab.iniciarTablero();
         
         Log_In login = new Log_In();

@@ -10,7 +10,7 @@ import java.util.Calendar;
  *
  * @author river
  */
-public class Player {
+public class Player implements Almacenamiento{
 
     public String username, password;
     public int puntos;
@@ -63,6 +63,7 @@ public class Player {
         this.puntos = puntos;
     }
 
+    @Override
     public void agregarPieza(int fila, int columna) {
         if (cantidad_piezas < piezas.length) {
             piezas[cantidad_piezas][0] = fila;

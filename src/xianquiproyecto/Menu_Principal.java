@@ -48,7 +48,7 @@ public class Menu_Principal {
         JLabel titulo = new JLabel(new ImageIcon(imagen));
         titulo.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        JButton jugar = new JButton("Jugar Ghosts");
+        JButton jugar = new JButton("Nueva Partida");
         jugar.addActionListener(e -> {
             String jugador2;
 

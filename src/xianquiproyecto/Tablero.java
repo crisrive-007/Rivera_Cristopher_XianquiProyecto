@@ -15,10 +15,13 @@ public final class Tablero {
 
     private final JButton[][] celdas = new JButton[10][9];
     private final Piezas[][] piezas = new Piezas[10][9];
-    private JFrame pantalla;
+    protected JFrame pantalla;
     private JPanel casillasSuperior;
     private JPanel casillasInferior;
+    private JPanel panelIzquierdo;
+    private JPanel panelDerecho;
     private Piezas piezaSeleccionada;
+    public static Tablero tab = new Tablero();
 
     public void iniciarTablero() {
         pantalla = new JFrame("Xiangqi - Nueva partida");
@@ -55,7 +58,7 @@ public final class Tablero {
         contenedorCasillas.add(Box.createRigidArea(new Dimension(0, 20)), BorderLayout.CENTER);
         contenedorCasillas.add(casillasInferior, BorderLayout.SOUTH);
 
-        JPanel panelIzquierdo = new JPanel();
+        panelIzquierdo = new JPanel();
         panelIzquierdo.setPreferredSize(new Dimension(255, 0));
         panelIzquierdo.setBackground(Color.LIGHT_GRAY);
         panelIzquierdo.setLayout(new BoxLayout(panelIzquierdo, BoxLayout.Y_AXIS));
@@ -71,12 +74,8 @@ public final class Tablero {
         piezasCapturadas1.setFont(new Font("Arial", Font.BOLD, 16));
         piezasCapturadas1.setForeground(Color.BLACK);
         panelIzquierdo.add(piezasCapturadas1);
-        
-        JPanel capturasJugador1 = new JPanel(new GridLayout(5, 2));
-        capturasJugador1.setBackground(Color.LIGHT_GRAY);
-        panelIzquierdo.add(capturasJugador1, BorderLayout.CENTER);
 
-        JPanel panelDerecho = new JPanel();
+        panelDerecho = new JPanel();
         panelDerecho.setPreferredSize(new Dimension(255, 0));
         panelDerecho.setBackground(Color.LIGHT_GRAY);
         panelDerecho.setLayout(new BoxLayout(panelDerecho, BoxLayout.Y_AXIS));
@@ -85,17 +84,13 @@ public final class Tablero {
         labelJugador2.setFont(new Font("Arial", Font.BOLD, 18));
         labelJugador2.setForeground(Color.BLACK);
         panelDerecho.add(labelJugador2);
-        
+
         panelDerecho.add(Box.createVerticalStrut(20));
 
         JLabel piezasCapturadas2 = new JLabel("Capturas:", SwingConstants.CENTER);
         piezasCapturadas2.setFont(new Font("Arial", Font.BOLD, 16));
         piezasCapturadas2.setForeground(Color.BLACK);
         panelDerecho.add(piezasCapturadas2);
-        
-        JPanel capturasJugador2 = new JPanel(new GridLayout(5, 2));
-        capturasJugador2.setBackground(Color.LIGHT_GRAY);
-        panelDerecho.add(capturasJugador2, BorderLayout.CENTER);
 
         tablero.add(crearPanelNumeros(), BorderLayout.WEST);
         tablero.add(crearPanelNumeros(), BorderLayout.EAST);
@@ -107,7 +102,25 @@ public final class Tablero {
         botonSalir.setFont(new Font("Arial", Font.BOLD, 16));
         botonSalir.setBackground(Color.decode("#891c00"));
         botonSalir.setForeground(Color.WHITE);
-        botonSalir.addActionListener(e -> pantalla.dispose());
+        botonSalir.addActionListener(e -> {
+            int confirmacion = JOptionPane.showConfirmDialog(null, "¿Deseas abandonar la partida?\n(Se contara como derrota automaticamente.)");
+
+            if (confirmacion == 0) {
+                if (Jugadores.juego.jugador_actual == Jugadores.juego.jugador1) {
+                    JOptionPane.showMessageDialog(null, "¡El jugador " + Jugadores.juego.jugador2.getUsername() + " gana!");
+                    Jugadores.juego.jugador2.añadir_log("¡El jugador " + Jugadores.juego.jugador2.getUsername() + " gana porque el rival a abandonado la partida!");
+                    Jugadores.juego.jugador1.añadir_log("¡El jugador " + Jugadores.juego.jugador1.getUsername() + " pierde porque ha abandonado la partida!");
+                } else if (Jugadores.juego.jugador_actual == Jugadores.juego.jugador2) {
+                    JOptionPane.showMessageDialog(null, "¡El jugador " + Jugadores.juego.jugador1.getUsername() + " gana!");
+                    Jugadores.juego.jugador1.añadir_log("¡El jugador " + Jugadores.juego.jugador1.getUsername() + " gana porque el rival a abandonado la partida!");
+                    Jugadores.juego.jugador2.añadir_log("¡El jugador " + Jugadores.juego.jugador2.getUsername() + " pierde porque ha abandonado la partida!");
+                }
+                pantalla.dispose();
+                LogicaDeVictoria.victoria.finDelJuego = true;
+                Menu_Principal menu = new Menu_Principal();
+                menu.Menu_Principal();
+            }
+        });
 
         JPanel panelBoton = new JPanel();
         panelBoton.setBackground(Color.LIGHT_GRAY);
@@ -160,6 +173,32 @@ public final class Tablero {
         return panel;
     }
 
+    /*public void agregarPiezaCapturada(Piezas piezaCapturada) {
+        if (piezaCapturada == null) {
+            return;
+        }
+
+        ImageIcon imagenPieza = new ImageIcon("/imagenes/" + obtenerNombreArchivoImagen(piezaCapturada));
+        JLabel labelImagen = new JLabel(imagenPieza);
+        labelImagen.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        if (piezaCapturada.esNegro) {
+            panelDerecho.add(labelImagen);
+        } else {
+            panelIzquierdo.add(labelImagen);
+        }
+
+        panelIzquierdo.revalidate();
+        panelIzquierdo.repaint();
+        panelDerecho.revalidate();
+        panelDerecho.repaint();
+    }
+    
+    public String obtenerNombreArchivoImagen(Piezas pieza) {
+        String tipoPieza = pieza.getClass().getSimpleName().toLowerCase();
+        String color = pieza.esNegro ? "negro" : "rojo";
+        return tipoPieza + "-" + color + ".PNG";
+    }*/
     private void colocarPiezasIniciales() {
         piezas[0][0] = new Carro_de_Guerra(0, 0, true);
         piezas[0][1] = new Caballo(0, 1, true);
@@ -210,6 +249,7 @@ public final class Tablero {
                             }
                         }
                         pieza.colocarPieza(celdas[fila][columna], fila, columna);
+                        LogicaDeVictoria.victoria.gameOver(piezas);
                     }
                 }
             }

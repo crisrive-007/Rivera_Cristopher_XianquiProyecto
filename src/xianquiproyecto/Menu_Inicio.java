@@ -59,7 +59,7 @@ public class Menu_Inicio {
         });
         salir.setMaximumSize(buttonSize);
         salir.setFont(new Font("Arial", Font.BOLD, 20));
-        crear_cuenta.addActionListener(e -> {
+        salir.addActionListener(e -> {
             pantalla.dispose();
         });
 
