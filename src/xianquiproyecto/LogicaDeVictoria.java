@@ -13,6 +13,7 @@ import javax.swing.JOptionPane;
 public class LogicaDeVictoria {
 
     public static LogicaDeVictoria victoria = new LogicaDeVictoria();
+
     protected boolean finDelJuego;
 
     public LogicaDeVictoria() {
@@ -20,8 +21,8 @@ public class LogicaDeVictoria {
     }
 
     public boolean gameOver(Piezas[][] piezas) {
-        if (finDelJuego == false) {
-            if (verificarFinDePartida(piezas) == true) {
+        if (!finDelJuego) {
+            if (verificarFinDePartida(piezas)) {
                 Menu_Principal menu = new Menu_Principal();
                 menu.Menu_Principal();
                 return true;
@@ -49,11 +50,13 @@ public class LogicaDeVictoria {
 
         if (!generalRojoVivo) {
             JOptionPane.showMessageDialog(null, "¡El jugador " + Jugadores.juego.jugador2.getUsername() + " gana!");
+            Jugadores.juego.jugador2.setPuntos(Jugadores.juego.jugador2.getPuntos() + 3);
             Jugadores.juego.jugador2.añadir_log("¡El jugador " + Jugadores.juego.jugador2.getUsername() + " gana porque se ha comido el general rojo.!");
             Jugadores.juego.jugador1.añadir_log("¡El jugador " + Jugadores.juego.jugador1.getUsername() + " pierde porque se han comido a su general!");
             return true;
         } else if (!generalNegroVivo) {
             JOptionPane.showMessageDialog(null, "¡El jugador " + Jugadores.juego.jugador1.getUsername() + " gana!");
+            Jugadores.juego.jugador1.setPuntos(Jugadores.juego.jugador1.getPuntos() + 3);
             Jugadores.juego.jugador1.añadir_log("¡El jugador " + Jugadores.juego.jugador1.getUsername() + " gana porque se ha comido el general negro.!");
             Jugadores.juego.jugador2.añadir_log("¡El jugador " + Jugadores.juego.jugador2.getUsername() + " pierde porque se han comido a su general!");
             return true;

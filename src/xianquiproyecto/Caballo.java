@@ -36,7 +36,7 @@ public class Caballo extends Piezas {
 
         return piezas[filaIntermedia][columnaIntermedia] == null;
     }
-    
+
     @Override
     public void colocarPieza(JButton celda, int fila, int columna) {
         if (esNegro) {

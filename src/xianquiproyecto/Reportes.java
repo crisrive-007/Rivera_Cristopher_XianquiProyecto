@@ -64,7 +64,7 @@ public class Reportes {
             String ranking_jugadores = "";
             for (int i = 0; i < 10; i++) {
                 if(Jugadores.juego.jugadores[i] != null) {
-                    ranking_jugadores += Jugadores.juego.jugadores[i].toString() + "\n";
+                    ranking_jugadores += (i+1) + ". " + Jugadores.juego.jugadores[i].getUsername() + " --- " + Jugadores.juego.jugadores[i].getPuntos() + "\n";
                 }
             }
             JOptionPane.showMessageDialog(null, ranking_jugadores);

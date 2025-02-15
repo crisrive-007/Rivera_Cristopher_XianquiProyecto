@@ -10,7 +10,7 @@ import java.util.Calendar;
  *
  * @author river
  */
-public class Player implements Almacenamiento{
+public class Player implements Almacenamiento {
 
     public String username, password;
     public int puntos;
@@ -43,7 +43,7 @@ public class Player implements Almacenamiento{
         return username;
     }
 
-    public final void setUsername(String username) {
+    public void setUsername(String username) {
         this.username = username;
     }
 
@@ -71,7 +71,8 @@ public class Player implements Almacenamiento{
             this.cantidad_piezas++;
         }
     }
-    
+
+    @Override
     public void eliminarPieza(int fila, int columna) {
         for (int i = 0; i < cantidad_piezas; i++) {
             if (piezas[i][0] == fila && piezas[i][1] == columna) {
@@ -84,11 +85,15 @@ public class Player implements Almacenamiento{
         cantidad_piezas--;
     }
 
+    @Override
     public void añadir_log(String log) {
         for (int i = partidas - 1; i > 0; i--) {
-            logs[i] = logs[i - 1];
+            if (logs[i - 1] != null) {
+                logs[i] = (i + 1) + ". " + logs[i - 1].substring(3); 
+            }
         }
-        logs[0] = log;
+
+        logs[0] = "1. " + log;
     }
 
     public String[] getLogs() {

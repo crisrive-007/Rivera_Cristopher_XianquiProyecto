@@ -23,6 +23,9 @@ public final class Tablero {
     private Piezas piezaSeleccionada;
     public static Tablero tab = new Tablero();
 
+    public Tablero() {
+    }
+
     public void iniciarTablero() {
         pantalla = new JFrame("Xiangqi - Nueva partida");
         pantalla.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -108,10 +111,12 @@ public final class Tablero {
             if (confirmacion == 0) {
                 if (Jugadores.juego.jugador_actual == Jugadores.juego.jugador1) {
                     JOptionPane.showMessageDialog(null, "¡El jugador " + Jugadores.juego.jugador2.getUsername() + " gana!");
+                    Jugadores.juego.jugador2.setPuntos(Jugadores.juego.jugador2.getPuntos() + 3);
                     Jugadores.juego.jugador2.añadir_log("¡El jugador " + Jugadores.juego.jugador2.getUsername() + " gana porque el rival a abandonado la partida!");
                     Jugadores.juego.jugador1.añadir_log("¡El jugador " + Jugadores.juego.jugador1.getUsername() + " pierde porque ha abandonado la partida!");
                 } else if (Jugadores.juego.jugador_actual == Jugadores.juego.jugador2) {
                     JOptionPane.showMessageDialog(null, "¡El jugador " + Jugadores.juego.jugador1.getUsername() + " gana!");
+                    Jugadores.juego.jugador1.setPuntos(Jugadores.juego.jugador1.getPuntos() + 3);
                     Jugadores.juego.jugador1.añadir_log("¡El jugador " + Jugadores.juego.jugador1.getUsername() + " gana porque el rival a abandonado la partida!");
                     Jugadores.juego.jugador2.añadir_log("¡El jugador " + Jugadores.juego.jugador2.getUsername() + " pierde porque ha abandonado la partida!");
                 }
@@ -173,7 +178,7 @@ public final class Tablero {
         return panel;
     }
 
-    /*public void agregarPiezaCapturada(Piezas piezaCapturada) {
+    public void agregarPiezaCapturada(Piezas piezaCapturada) {
         if (piezaCapturada == null) {
             return;
         }
@@ -193,12 +198,13 @@ public final class Tablero {
         panelDerecho.revalidate();
         panelDerecho.repaint();
     }
-    
+
     public String obtenerNombreArchivoImagen(Piezas pieza) {
         String tipoPieza = pieza.getClass().getSimpleName().toLowerCase();
         String color = pieza.esNegro ? "negro" : "rojo";
         return tipoPieza + "-" + color + ".PNG";
-    }*/
+    }
+
     private void colocarPiezasIniciales() {
         piezas[0][0] = new Carro_de_Guerra(0, 0, true);
         piezas[0][1] = new Caballo(0, 1, true);
@@ -249,7 +255,6 @@ public final class Tablero {
                             }
                         }
                         pieza.colocarPieza(celdas[fila][columna], fila, columna);
-                        LogicaDeVictoria.victoria.gameOver(piezas);
                     }
                 }
             }
@@ -280,8 +285,12 @@ public final class Tablero {
 
                 piezaSeleccionada.limpiarResaltado(celdas);
 
-                Jugadores.juego.cambio_turno();
-
+                if (!LogicaDeVictoria.victoria.gameOver(piezas)) {
+                    Jugadores.juego.cambio_turno();
+                } else {
+                    pantalla.dispose();
+                }
+                
                 piezaSeleccionada = null;
             } else {
                 piezaSeleccionada.limpiarResaltado(celdas);
