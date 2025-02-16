@@ -49,16 +49,20 @@ public class LogicaDeVictoria {
         }
 
         if (!generalRojoVivo) {
-            JOptionPane.showMessageDialog(null, "¡El jugador " + Jugadores.juego.jugador2.getUsername() + " gana!");
+            JOptionPane.showMessageDialog(null, "El jugador " + Jugadores.juego.jugador2.getUsername() + " vencio a " + Jugadores.juego.jugador1.getUsername() + ".\n¡Felicidades, has ganado 3 puntos!");
             Jugadores.juego.jugador2.setPuntos(Jugadores.juego.jugador2.getPuntos() + 3);
-            Jugadores.juego.jugador2.añadir_log("¡El jugador " + Jugadores.juego.jugador2.getUsername() + " gana porque se ha comido el general rojo.!");
-            Jugadores.juego.jugador1.añadir_log("¡El jugador " + Jugadores.juego.jugador1.getUsername() + " pierde porque se han comido a su general!");
+            Jugadores.juego.jugador2.setPartidas_ganadas(Jugadores.juego.jugador2.getPartidas_ganadas() + 1);
+            Jugadores.juego.jugador1.setPartidas_perdidas(Jugadores.juego.jugador1.getPartidas_perdidas() + 1);
+            Jugadores.juego.jugador2.añadir_log("El jugador " + Jugadores.juego.jugador2.getUsername() + " gana porque se ha comido el general de " + Jugadores.juego.jugador1.getUsername() + "!");
+            Jugadores.juego.jugador1.añadir_log("El jugador " + Jugadores.juego.jugador1.getUsername() + " pierde en contra de " + Jugadores.juego.jugador2.getUsername() + " porque se han comido a su general.");
             return true;
         } else if (!generalNegroVivo) {
-            JOptionPane.showMessageDialog(null, "¡El jugador " + Jugadores.juego.jugador1.getUsername() + " gana!");
+            JOptionPane.showMessageDialog(null, "El jugador " + Jugadores.juego.jugador1.getUsername() + " vencio a " + Jugadores.juego.jugador2.getUsername() + ".\n¡Felicidades, has ganado 3 puntos!");
             Jugadores.juego.jugador1.setPuntos(Jugadores.juego.jugador1.getPuntos() + 3);
-            Jugadores.juego.jugador1.añadir_log("¡El jugador " + Jugadores.juego.jugador1.getUsername() + " gana porque se ha comido el general negro.!");
-            Jugadores.juego.jugador2.añadir_log("¡El jugador " + Jugadores.juego.jugador2.getUsername() + " pierde porque se han comido a su general!");
+            Jugadores.juego.jugador1.setPartidas_ganadas(Jugadores.juego.jugador1.getPartidas_ganadas() + 1);
+            Jugadores.juego.jugador2.setPartidas_perdidas(Jugadores.juego.jugador2.getPartidas_perdidas() + 1);
+            Jugadores.juego.jugador1.añadir_log("El jugador " + Jugadores.juego.jugador1.getUsername() + " gana porque se ha comido el general de " + Jugadores.juego.jugador2.getUsername() + "!");
+            Jugadores.juego.jugador2.añadir_log("El jugador " + Jugadores.juego.jugador2.getUsername() + " pierde en contra de " + Jugadores.juego.jugador1.getUsername() + " porque se han comido a su general.");
             return true;
         }
 

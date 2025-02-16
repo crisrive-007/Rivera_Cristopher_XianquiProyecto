@@ -120,15 +120,19 @@ public final class Tablero {
 
             if (confirmacion == 0) {
                 if (Jugadores.juego.jugador_actual == Jugadores.juego.jugador1) {
-                    JOptionPane.showMessageDialog(null, "¡El jugador " + Jugadores.juego.jugador2.getUsername() + " gana!");
+                    JOptionPane.showMessageDialog(null, "El jugador " + Jugadores.juego.jugador2.getUsername() + " vencio a " + Jugadores.juego.jugador1.getUsername() + ".\n¡Felicidades, has ganado 3 puntos!");
                     Jugadores.juego.jugador2.setPuntos(Jugadores.juego.jugador2.getPuntos() + 3);
-                    Jugadores.juego.jugador2.añadir_log("¡El jugador " + Jugadores.juego.jugador2.getUsername() + " gana porque el rival a abandonado la partida!");
-                    Jugadores.juego.jugador1.añadir_log("¡El jugador " + Jugadores.juego.jugador1.getUsername() + " pierde porque ha abandonado la partida!");
+                    Jugadores.juego.jugador2.setPartidas_ganadas(Jugadores.juego.jugador2.getPartidas_ganadas() + 1);
+                    Jugadores.juego.jugador1.setPartidas_perdidas(Jugadores.juego.jugador1.getPartidas_perdidas() + 1);
+                    Jugadores.juego.jugador2.añadir_log("¡El jugador " + Jugadores.juego.jugador2.getUsername() + " gana porque "  + Jugadores.juego.jugador1.getUsername() + " ha abandonado la partida!");
+                    Jugadores.juego.jugador1.añadir_log("¡El jugador " + Jugadores.juego.jugador1.getUsername() + " pierde contra " + Jugadores.juego.jugador2.getUsername() + " porque ha abandonado la partida!");
                 } else if (Jugadores.juego.jugador_actual == Jugadores.juego.jugador2) {
-                    JOptionPane.showMessageDialog(null, "¡El jugador " + Jugadores.juego.jugador1.getUsername() + " gana!");
+                    JOptionPane.showMessageDialog(null, "El jugador " + Jugadores.juego.jugador1.getUsername() + " vencio a " + Jugadores.juego.jugador2.getUsername() + ".\n¡Felicidades, has ganado 3 puntos!");
                     Jugadores.juego.jugador1.setPuntos(Jugadores.juego.jugador1.getPuntos() + 3);
-                    Jugadores.juego.jugador1.añadir_log("¡El jugador " + Jugadores.juego.jugador1.getUsername() + " gana porque el rival a abandonado la partida!");
-                    Jugadores.juego.jugador2.añadir_log("¡El jugador " + Jugadores.juego.jugador2.getUsername() + " pierde porque ha abandonado la partida!");
+                    Jugadores.juego.jugador1.setPartidas_ganadas(Jugadores.juego.jugador1.getPartidas_ganadas() + 1);
+                    Jugadores.juego.jugador2.setPartidas_perdidas(Jugadores.juego.jugador2.getPartidas_perdidas() + 1);
+                    Jugadores.juego.jugador1.añadir_log("¡El jugador " + Jugadores.juego.jugador1.getUsername() + " gana porque " + Jugadores.juego.jugador2.getUsername() + " ha abandonado la partida!");
+                    Jugadores.juego.jugador2.añadir_log("¡El jugador " + Jugadores.juego.jugador2.getUsername() + " pierde contra " + Jugadores.juego.jugador1.getUsername() + " porque ha abandonado la partida!");
                 }
                 pantalla.dispose();
                 LogicaDeVictoria.victoria.finDelJuego = true;
@@ -195,7 +199,7 @@ public final class Tablero {
 
         JLabel pieza_capturada = new JLabel();
         pieza_capturada.setPreferredSize(new Dimension(40, 40));
-        pieza_capturada.setBorder(BorderFactory.createLineBorder(Color.black, 1));
+        pieza_capturada.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY, 1));
 
         String nombreArchivo = obtenerNombreArchivoImagen(piezaCapturada);
         ImageIcon imagenPieza = new ImageIcon(getClass().getResource("/imagenes/" + nombreArchivo));

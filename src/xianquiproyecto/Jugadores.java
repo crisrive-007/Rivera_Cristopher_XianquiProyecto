@@ -32,11 +32,16 @@ public class Jugadores {
     }
 
     public int eliminar_cuenta() {
-        int eliminar = JOptionPane.showConfirmDialog(null, "Desea eliminar la cuenta?");
+        int eliminar = JOptionPane.showConfirmDialog(null, "¿Desea eliminar la cuenta?");
 
         if (eliminar == 0) {
-            jugador1.setUsername("");
-            jugador1.setPuntos(0);
+            for (int i = 0; i < jugadores_registrados; i++) {
+                if (jugadores[i] == jugador1) {
+                    jugadores[i].setActivo(false);
+                    JOptionPane.showMessageDialog(null, "Cuenta eliminada exitosamente.");
+                    return eliminar;
+                }
+            }
         }
         return eliminar;
     }
@@ -48,7 +53,7 @@ public class Jugadores {
         }
 
         if (index < jugadores.length) {
-            if (jugadores[index].getUsername().equals(username) && jugadores[index].getPassword().equals(password)) {
+            if (jugadores[index].getUsername().equals(username) && jugadores[index].getPassword().equals(password) && jugadores[index].isActivo()) {
                 jugador1 = jugadores[index];
                 JOptionPane.showMessageDialog(null, "Inicio de sesión exitoso. ¡Bienvenido, " + username + "!");
                 return jugadores[index];
@@ -83,28 +88,43 @@ public class Jugadores {
     }
 
     public boolean usuario_existente(int index, String username) {
-        if (jugadores[index] == null) {
+        if (index >= jugadores.length || jugadores[index] == null) {
             return false;
         }
 
-        if (index < jugadores.length) {
-            if (jugadores[index].getUsername().equals(username)) {
-                return true;
-            } else {
-                return usuario_existente(index + 1, username);
+        String usuario_registrado = jugadores[index].getUsername();
+
+        if (jugadores[index].isActivo()) {
+            if (username.length() == usuario_registrado.length()) {
+                boolean sonIguales = true;
+                for (int i = 0; i < username.length(); i++) {
+                    char charUsuario = username.charAt(i);
+                    char charRegistrado = usuario_registrado.charAt(i);
+
+                    if (Character.toLowerCase(charUsuario) != Character.toLowerCase(charRegistrado)) {
+                        sonIguales = false;
+                        break;
+                    }
+                }
+
+                if (sonIguales) {
+                    return true;
+                }
             }
         }
-        return false;
+
+        return usuario_existente(index + 1, username);
     }
 
     public Player jugador2(int index, String username) {
         if (index < jugadores_registrados) {
-            if (jugadores[index].getUsername().equalsIgnoreCase(username)) {
-                jugador2 = jugadores[index];
-                return jugadores[index];
-            } else {
-                return jugador2(index + 1, username);
+            if (jugadores[index] != null && jugadores[index].isActivo()) {
+                if (jugadores[index].getUsername().equalsIgnoreCase(username)) {
+                    jugador2 = jugadores[index];
+                    return jugadores[index];
+                }
             }
+            return jugador2(index + 1, username);
         }
         return null;
     }
@@ -117,7 +137,7 @@ public class Jugadores {
         }
         JOptionPane.showMessageDialog(null, turno());
     }
-    
+
     public String turno() {
         return "Es turno del jugador: " + jugador_actual.getUsername();
     }

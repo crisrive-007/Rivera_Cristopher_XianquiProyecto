@@ -29,7 +29,7 @@ public class Reportes {
             }
         };
         menu.setLayout(new BoxLayout(menu, BoxLayout.Y_AXIS));
-        
+
         JPanel topPanel = new JPanel();
         topPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
         JButton salir = new JButton("Salir");
@@ -62,9 +62,11 @@ public class Reportes {
         ranking.addActionListener(e -> {
             Jugadores.juego.ordenar_jugadores();
             String ranking_jugadores = "";
+            int contadorRanking = 1;
             for (int i = 0; i < 10; i++) {
-                if(Jugadores.juego.jugadores[i] != null) {
-                    ranking_jugadores += (i+1) + ". " + Jugadores.juego.jugadores[i].getUsername() + " --- " + Jugadores.juego.jugadores[i].getPuntos() + "\n";
+                if (Jugadores.juego.jugadores[i] != null && Jugadores.juego.jugadores[i].isActivo()) {
+                    ranking_jugadores += contadorRanking + ". " + Jugadores.juego.jugadores[i].getUsername() + " --- " + Jugadores.juego.jugadores[i].getPuntos() + "\n";
+                    contadorRanking++;
                 }
             }
             JOptionPane.showMessageDialog(null, ranking_jugadores);

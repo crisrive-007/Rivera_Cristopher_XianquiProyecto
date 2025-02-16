@@ -14,7 +14,7 @@ import java.awt.*;
 public class Menu_Principal {
 
     public void Menu_Principal() {
-        JFrame pantalla = new JFrame("Xinagqi");
+        JFrame pantalla = new JFrame("Xiangqi");
         pantalla.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         pantalla.setSize(500, 400);
         pantalla.setLocationRelativeTo(null);

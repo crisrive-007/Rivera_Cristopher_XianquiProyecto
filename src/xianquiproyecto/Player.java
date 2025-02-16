@@ -18,6 +18,8 @@ public class Player implements Almacenamiento {
     public int dia;
     public int mes;
     public int año;
+    public int partidas_ganadas;
+    public int partidas_perdidas;
     public boolean activo;
     public int[][] piezas;
     public int cantidad_piezas;
@@ -33,6 +35,8 @@ public class Player implements Almacenamiento {
         this.dia = fecha_de_ingreso.get(Calendar.DAY_OF_MONTH);
         this.mes = fecha_de_ingreso.get(Calendar.MONTH) + 1;
         this.año = fecha_de_ingreso.get(Calendar.YEAR);
+        this.partidas_ganadas = 0;
+        this.partidas_perdidas = 0;
         this.activo = true;
         this.piezas = new int[16][2];
         this.cantidad_piezas = 0;
@@ -63,6 +67,30 @@ public class Player implements Almacenamiento {
         this.puntos = puntos;
     }
 
+    public int getPartidas_ganadas() {
+        return partidas_ganadas;
+    }
+
+    public void setPartidas_ganadas(int partidas_ganadas) {
+        this.partidas_ganadas = partidas_ganadas;
+    }
+
+    public int getPartidas_perdidas() {
+        return partidas_perdidas;
+    }
+
+    public void setPartidas_perdidas(int partidas_perdidas) {
+        this.partidas_perdidas = partidas_perdidas;
+    }
+
+    public boolean isActivo() {
+        return activo;
+    }
+
+    public void setActivo(boolean activo) {
+        this.activo = activo;
+    }
+
     @Override
     public void agregarPieza(int fila, int columna, Piezas pieza) {
         if (cantidad_piezas < piezas.length) {
@@ -89,7 +117,7 @@ public class Player implements Almacenamiento {
     public void añadir_log(String log) {
         for (int i = partidas - 1; i > 0; i--) {
             if (logs[i - 1] != null) {
-                logs[i] = (i + 1) + ". " + logs[i - 1].substring(3); 
+                logs[i] = (i + 1) + ". " + logs[i - 1].substring(3);
             }
         }
 
@@ -97,7 +125,19 @@ public class Player implements Almacenamiento {
     }
 
     public String[] getLogs() {
-        return logs;
+        String[] logsActualizados = new String[partidas];
+        for (int i = 0; i < partidas; i++) {
+            if (logs[i] != null) {
+                String log = logs[i];
+                for (Player jugador : Jugadores.juego.jugadores) {
+                    if (jugador != null && !jugador.activo) {
+                        log = log.replace(jugador.getUsername(), "'jugador inexistente'");
+                    }
+                }
+                logsActualizados[i] = log;
+            }
+        }
+        return logsActualizados;
     }
 
     public void setLogs(String[] logs) {
@@ -106,6 +146,6 @@ public class Player implements Almacenamiento {
 
     @Override
     public String toString() {
-        return "Jugador: " + username + "\nPuntos: " + puntos + "\nFecha de Ingreso: " + dia + "/" + mes + "/" + año;
+        return "Jugador: " + username + "\nPuntos: " + Jugadores.juego.jugador1.getPuntos() + "\nFecha de Ingreso: " + this.dia + "/" + this.mes + "/" + this.año + "\n\nPartidas Ganadas: " + Jugadores.juego.jugador1.getPartidas_ganadas() + "\nPartidas Perdidas: " + Jugadores.juego.jugador1.getPartidas_perdidas();
     }
 }
