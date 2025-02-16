@@ -5,8 +5,9 @@
 package xianquiproyecto;
 
 import java.awt.Color;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JOptionPane;
+import javax.swing.JLabel;
 
 /**
  *
@@ -96,7 +97,6 @@ public abstract class Piezas {
             Jugadores.juego.jugador2.eliminarPieza(nuevaFila, nuevaColumna);
         }
         piezaCapturada.capturada = true;
-        //Tablero.tab.agregarPiezaCapturada(piezaCapturada);
         moverPieza(nuevaFila, nuevaColumna, piezas, celdas);
     }
 }

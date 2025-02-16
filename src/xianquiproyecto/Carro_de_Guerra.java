@@ -24,17 +24,25 @@ public class Carro_de_Guerra extends Piezas {
             return false;
         }
 
+        if (esPiezaDelJugadorActualEnPosicion(nuevaFila, nuevaColumna, piezas)) {
+            return false;
+        }
+
         if (fila == nuevaFila) {
+            // Movimiento horizontal
             int menor = Math.min(columna, nuevaColumna);
             int mayor = Math.max(columna, nuevaColumna);
+
             for (int i = menor + 1; i < mayor; i++) {
                 if (piezas[fila][i] != null) {
                     return false;
                 }
             }
         } else {
+            // Movimiento vertical
             int menor = Math.min(fila, nuevaFila);
             int mayor = Math.max(fila, nuevaFila);
+
             for (int i = menor + 1; i < mayor; i++) {
                 if (piezas[i][columna] != null) {
                     return false;
@@ -42,11 +50,7 @@ public class Carro_de_Guerra extends Piezas {
             }
         }
 
-        if (esPiezaDelJugadorActualEnPosicion(nuevaFila, nuevaColumna, piezas)) {
-            return false;
-        }
-
-        return piezas[nuevaFila][nuevaColumna] == null;
+        return true;
     }
 
     @Override

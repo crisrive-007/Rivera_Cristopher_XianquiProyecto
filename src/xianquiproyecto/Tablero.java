@@ -20,11 +20,10 @@ public final class Tablero {
     private JPanel casillasInferior;
     private JPanel panelIzquierdo;
     private JPanel panelDerecho;
+    public JPanel capturasJugador1;
+    public JPanel capturasJugador2;
     private Piezas piezaSeleccionada;
     public static Tablero tab = new Tablero();
-
-    public Tablero() {
-    }
 
     public void iniciarTablero() {
         pantalla = new JFrame("Xiangqi - Nueva partida");
@@ -61,6 +60,11 @@ public final class Tablero {
         contenedorCasillas.add(Box.createRigidArea(new Dimension(0, 20)), BorderLayout.CENTER);
         contenedorCasillas.add(casillasInferior, BorderLayout.SOUTH);
 
+        capturasJugador1 = new JPanel(new GridLayout(4, 4));
+        capturasJugador1.setBackground(Color.LIGHT_GRAY);
+        capturasJugador2 = new JPanel(new GridLayout(4, 4));
+        capturasJugador2.setBackground(Color.LIGHT_GRAY);
+
         panelIzquierdo = new JPanel();
         panelIzquierdo.setPreferredSize(new Dimension(255, 0));
         panelIzquierdo.setBackground(Color.LIGHT_GRAY);
@@ -77,6 +81,9 @@ public final class Tablero {
         piezasCapturadas1.setFont(new Font("Arial", Font.BOLD, 16));
         piezasCapturadas1.setForeground(Color.BLACK);
         panelIzquierdo.add(piezasCapturadas1);
+        panelIzquierdo.add(capturasJugador1);
+
+        panelIzquierdo.add(Box.createVerticalStrut(1000));
 
         panelDerecho = new JPanel();
         panelDerecho.setPreferredSize(new Dimension(255, 0));
@@ -94,6 +101,9 @@ public final class Tablero {
         piezasCapturadas2.setFont(new Font("Arial", Font.BOLD, 16));
         piezasCapturadas2.setForeground(Color.BLACK);
         panelDerecho.add(piezasCapturadas2);
+        panelDerecho.add(capturasJugador2);
+
+        panelDerecho.add(Box.createVerticalStrut(1000));
 
         tablero.add(crearPanelNumeros(), BorderLayout.WEST);
         tablero.add(crearPanelNumeros(), BorderLayout.EAST);
@@ -183,26 +193,27 @@ public final class Tablero {
             return;
         }
 
-        ImageIcon imagenPieza = new ImageIcon("/imagenes/" + obtenerNombreArchivoImagen(piezaCapturada));
-        JLabel labelImagen = new JLabel(imagenPieza);
-        labelImagen.setAlignmentX(Component.CENTER_ALIGNMENT);
+        JLabel pieza_capturada = new JLabel();
+        pieza_capturada.setPreferredSize(new Dimension(40, 40));
+        pieza_capturada.setBorder(BorderFactory.createLineBorder(Color.black, 1));
+
+        String nombreArchivo = obtenerNombreArchivoImagen(piezaCapturada);
+        ImageIcon imagenPieza = new ImageIcon(getClass().getResource("/imagenes/" + nombreArchivo));
+        Image imagen = imagenPieza.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
+        pieza_capturada.setHorizontalAlignment(SwingConstants.CENTER);
+        pieza_capturada.setIcon(new ImageIcon(imagen));
 
         if (piezaCapturada.esNegro) {
-            panelDerecho.add(labelImagen);
+            capturasJugador1.add(pieza_capturada);
         } else {
-            panelIzquierdo.add(labelImagen);
+            capturasJugador2.add(pieza_capturada);
         }
-
-        panelIzquierdo.revalidate();
-        panelIzquierdo.repaint();
-        panelDerecho.revalidate();
-        panelDerecho.repaint();
     }
 
     public String obtenerNombreArchivoImagen(Piezas pieza) {
         String tipoPieza = pieza.getClass().getSimpleName().toLowerCase();
         String color = pieza.esNegro ? "negro" : "rojo";
-        return tipoPieza + "-" + color + ".PNG";
+        return tipoPieza + "-" + color + ".png";
     }
 
     private void colocarPiezasIniciales() {
@@ -247,11 +258,11 @@ public final class Tablero {
                     if (pieza != null) {
                         if (pieza.esNegro) {
                             if (Jugadores.juego.jugador2 != null) {
-                                Jugadores.juego.jugador2.agregarPieza(fila, columna);
+                                Jugadores.juego.jugador2.agregarPieza(fila, columna, pieza);
                             }
-                        } else {
+                        } else if (!pieza.esNegro) {
                             if (Jugadores.juego.jugador1 != null) {
-                                Jugadores.juego.jugador1.agregarPieza(fila, columna);
+                                Jugadores.juego.jugador1.agregarPieza(fila, columna, pieza);
                             }
                         }
                         pieza.colocarPieza(celdas[fila][columna], fila, columna);
@@ -265,9 +276,13 @@ public final class Tablero {
         Piezas pieza = piezas[fila][columna];
 
         if (piezaSeleccionada == null) {
-            if (pieza != null && pieza.esPiezaDelJugadorActual()) {
-                piezaSeleccionada = pieza;
-                piezaSeleccionada.resaltarMovimientosValidos(piezaSeleccionada, piezas, celdas, fila, columna);
+            if (pieza != null) {
+                if (pieza.esPiezaDelJugadorActual()) {
+                    piezaSeleccionada = pieza;
+                    piezaSeleccionada.resaltarMovimientosValidos(piezaSeleccionada, piezas, celdas, fila, columna);
+                } else if (!pieza.esPiezaDelJugadorActual()) {
+                    JOptionPane.showMessageDialog(null, "Esta pieza no es tuya.");
+                }
             }
         } else {
             if (piezaSeleccionada.esPosicionValida(fila, columna, piezas)) {
@@ -275,6 +290,7 @@ public final class Tablero {
 
                 if (piezaCapturada != null && piezaCapturada.esNegro != piezaSeleccionada.esNegro) {
                     piezaSeleccionada.capturarPieza(fila, columna, piezas, celdas, piezaCapturada);
+                    agregarPiezaCapturada(piezaCapturada);
                 }
 
                 piezas[piezaSeleccionada.fila][piezaSeleccionada.columna] = null;
@@ -290,7 +306,7 @@ public final class Tablero {
                 } else {
                     pantalla.dispose();
                 }
-                
+
                 piezaSeleccionada = null;
             } else {
                 piezaSeleccionada.limpiarResaltado(celdas);

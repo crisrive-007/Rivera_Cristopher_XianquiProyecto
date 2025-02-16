@@ -34,7 +34,7 @@ public class Player implements Almacenamiento {
         this.mes = fecha_de_ingreso.get(Calendar.MONTH) + 1;
         this.año = fecha_de_ingreso.get(Calendar.YEAR);
         this.activo = true;
-        this.piezas = new int[8][2];
+        this.piezas = new int[16][2];
         this.cantidad_piezas = 0;
         this.logs = new String[partidas];
     }
@@ -64,7 +64,7 @@ public class Player implements Almacenamiento {
     }
 
     @Override
-    public void agregarPieza(int fila, int columna) {
+    public void agregarPieza(int fila, int columna, Piezas pieza) {
         if (cantidad_piezas < piezas.length) {
             piezas[cantidad_piezas][0] = fila;
             piezas[cantidad_piezas][1] = columna;

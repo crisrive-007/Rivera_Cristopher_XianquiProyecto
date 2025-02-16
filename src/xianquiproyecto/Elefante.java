@@ -20,8 +20,8 @@ public class Elefante extends Piezas {
 
     @Override
     public boolean esPosicionValida(int nuevaFila, int nuevaColumna, Piezas[][] piezas) {
-        if (nuevaFila == 5) {
-            nuevaFila = 6;
+        if (esPiezaDelJugadorActualEnPosicion(nuevaFila, nuevaColumna, piezas)) {
+            return false;
         }
 
         if (Math.abs(nuevaFila - fila) == 2 && Math.abs(nuevaColumna - columna) == 2) {
@@ -29,7 +29,7 @@ public class Elefante extends Piezas {
             int columnaIntermedia = (columna + nuevaColumna) / 2;
 
             if (piezas[filaIntermedia][columnaIntermedia] == null) {
-                if ((esNegro && nuevaFila <= 5) || (!esNegro && nuevaFila >= 7)) {
+                if ((esNegro && nuevaFila <= 4) || (!esNegro && nuevaFila >= 5)) {
                     return true;
                 }
             }

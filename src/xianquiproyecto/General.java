@@ -19,11 +19,15 @@ public class General extends Piezas {
     }
 
     @Override
-    public boolean esPosicionValida(int nuevaFila, int nuevaColumna, Piezas[][] piezas
-    ) {
+    public boolean esPosicionValida(int nuevaFila, int nuevaColumna, Piezas[][] piezas) {
         if (!super.estaEnPalacio(nuevaFila, nuevaColumna)) {
             return false;
         }
+        
+        if (esPiezaDelJugadorActualEnPosicion(nuevaFila, nuevaColumna, piezas)) {
+            return false;
+        }
+        
         int difFila = Math.abs(nuevaFila - fila);
         int difColumna = Math.abs(nuevaColumna - columna);
         

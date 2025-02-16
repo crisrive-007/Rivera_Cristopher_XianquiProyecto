@@ -39,13 +39,6 @@ public class Cañon extends Piezas {
                     contadorPiezas++;
                 }
             }
-
-            if (piezas[nuevaFila][nuevaColumna] != null) {
-                contadorPiezas++;
-            }
-
-            return (contadorPiezas == 0 || contadorPiezas == 1);
-
         } else {
             int menor = Math.min(fila, nuevaFila);
             int mayor = Math.max(fila, nuevaFila);
@@ -55,12 +48,12 @@ public class Cañon extends Piezas {
                     contadorPiezas++;
                 }
             }
+        }
 
-            if (piezas[nuevaFila][nuevaColumna] != null) {
-                contadorPiezas++;
-            }
-
-            return (contadorPiezas == 0 || contadorPiezas == 1);
+        if (piezas[nuevaFila][nuevaColumna] != null && !piezas[nuevaFila][nuevaColumna].esNegro == this.esNegro) {
+            return contadorPiezas == 1;
+        } else {
+            return contadorPiezas == 0;
         }
     }
 
