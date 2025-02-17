@@ -23,33 +23,17 @@ public class General extends Piezas {
         if (!super.estaEnPalacio(nuevaFila, nuevaColumna)) {
             return false;
         }
-        
+
         if (esPiezaDelJugadorActualEnPosicion(nuevaFila, nuevaColumna, piezas)) {
             return false;
         }
-        
+
         int difFila = Math.abs(nuevaFila - fila);
         int difColumna = Math.abs(nuevaColumna - columna);
-        
-        if ((difFila == 1 && difColumna == 0) || (difFila == 0 && difColumna == 1)) {
-            if (!hayVisionDirectaConOponente(nuevaFila, nuevaColumna, piezas)) {
-                return true;
-            }
-        }
-        return false;
+
+        return (difFila == 1 && difColumna == 0) || (difFila == 0 && difColumna == 1);
     }
 
-    private boolean hayVisionDirectaConOponente(int nuevaFila, int nuevaColumna, Piezas[][] piezas) {
-        int filaOponente = esNegro ? 9 : 0;
-        int columnaOponente = nuevaColumna;
-        for (int i = Math.min(fila, filaOponente) + 1; i < Math.max(fila, filaOponente); i++) {
-            if (piezas[i][columnaOponente] != null) {
-                return false;
-            }
-        }
-        return true;
-    }
-    
     @Override
     public void colocarPieza(JButton celda, int fila, int columna) {
         if (esNegro) {

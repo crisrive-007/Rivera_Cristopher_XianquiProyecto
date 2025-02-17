@@ -136,6 +136,7 @@ public final class Tablero {
                 }
                 pantalla.dispose();
                 LogicaDeVictoria.victoria.finDelJuego = true;
+                System.out.println(String.valueOf(LogicaDeVictoria.victoria.finDelJuego));
                 Menu_Principal menu = new Menu_Principal();
                 menu.Menu_Principal();
             }
@@ -254,6 +255,9 @@ public final class Tablero {
         piezas[6][4] = new Soldado(6, 4, false);
         piezas[6][6] = new Soldado(6, 6, false);
         piezas[6][8] = new Soldado(6, 8, false);
+        
+        LogicaDeVictoria.victoria.finDelJuego = false;
+        System.out.println(String.valueOf(LogicaDeVictoria.victoria.finDelJuego));
 
         for (int fila = 0; fila < 10; fila++) {
             for (int columna = 0; columna < 9; columna++) {
