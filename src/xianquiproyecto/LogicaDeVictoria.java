@@ -24,7 +24,6 @@ public class LogicaDeVictoria {
         if (!LogicaDeVictoria.victoria.finDelJuego) {
             if (verificarFinDePartida(piezas)) {
                 LogicaDeVictoria.victoria.finDelJuego = true;
-                System.out.println(String.valueOf(LogicaDeVictoria.victoria.finDelJuego));
                 Menu_Principal menu = new Menu_Principal();
                 menu.Menu_Principal();
                 return true;
