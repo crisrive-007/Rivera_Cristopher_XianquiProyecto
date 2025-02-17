@@ -17,18 +17,6 @@ public class XianquiProyecto {
         // TODO code application logic here
         Menu_Inicio menu = new Menu_Inicio();
         menu.Menu_Inicio();
-        
-        //Tablero tab = new Tablero();
-        //tab.iniciarTablero();
-        
-        Log_In login = new Log_In();
-        //login.Log_In();
-        
-        Crear_Cuenta cuenta = new Crear_Cuenta();
-        //cuenta.Crear_Cuenta();
-        
-        Menu_Principal menuP = new Menu_Principal();
-        //menuP.Menu_Principal();
     }
     
 }

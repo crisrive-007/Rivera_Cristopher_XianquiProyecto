@@ -10,7 +10,7 @@ import javax.swing.JOptionPane;
  *
  * @author river
  */
-public class LogicaDeVictoria {
+public final class LogicaDeVictoria {
 
     public static LogicaDeVictoria victoria = new LogicaDeVictoria();
 
