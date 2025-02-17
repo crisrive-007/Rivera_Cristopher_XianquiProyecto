@@ -30,35 +30,21 @@ public class Reportes {
         };
         menu.setLayout(new BoxLayout(menu, BoxLayout.Y_AXIS));
 
-        JPanel topPanel = new JPanel();
-        topPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-        JButton salir = new JButton("Salir");
-        salir.setBackground(Color.YELLOW);
-        salir.setForeground(Color.BLACK);
-        salir.setFont(new Font("Arial", Font.BOLD, 14));
-        salir.addActionListener(e -> {
-            pantalla.dispose();
-            Menu_Principal menuP = new Menu_Principal();
-            menuP.Menu_Principal();
-        });
-        topPanel.add(salir);
-        topPanel.setOpaque(false);
-
         ImageIcon icon = new ImageIcon(getClass().getResource("/imagenes/XIANGQI.PNG"));
         Image imagen = icon.getImage().getScaledInstance(300, 85, Image.SCALE_SMOOTH);
         JLabel titulo = new JLabel(new ImageIcon(imagen));
         titulo.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        JButton ranking = new JButton("Ranking de Jugadores");
+        JButton ranking = new JButton("Ranking jugadores");
         ranking.setBackground(Color.YELLOW);
-        JButton historial = new JButton("Historial de Partidas");
+        JButton historial = new JButton("Historial de partidas");
         historial.setBackground(Color.YELLOW);
-        JButton volver = new JButton("Salir");
+        JButton volver = new JButton("Volver al inicio");
         volver.setBackground(Color.YELLOW);
 
         Dimension buttonSize = new Dimension(200, 40);
         ranking.setMaximumSize(buttonSize);
-        ranking.setFont(new Font("Arial", Font.BOLD, 20));
+        ranking.setFont(new Font("Arial", Font.BOLD, 16));
         ranking.addActionListener(e -> {
             Jugadores.juego.ordenar_jugadores();
             String ranking_jugadores = "";
@@ -72,19 +58,32 @@ public class Reportes {
             JOptionPane.showMessageDialog(null, ranking_jugadores);
         });
         historial.setMaximumSize(buttonSize);
-        historial.setFont(new Font("Arial", Font.BOLD, 20));
+        historial.setFont(new Font("Arial", Font.BOLD, 16));
         historial.addActionListener(e -> {
             String[] logs = Jugadores.juego.jugador1.getLogs();
             StringBuilder partidas = new StringBuilder();
+
+            boolean hayPartidas = false;
             for (String log : logs) {
                 if (log != null) {
-                    partidas.append(log).append("\n");
+                    hayPartidas = true;
+                    break;
                 }
             }
-            JOptionPane.showMessageDialog(null, partidas.toString());
+
+            if (!hayPartidas) {
+                JOptionPane.showMessageDialog(null, "No hay partidas guardadas.");
+            } else {
+                for (String log : logs) {
+                    if (log != null) {
+                        partidas.append(log).append("\n");
+                    }
+                }
+                JOptionPane.showMessageDialog(null, partidas.toString());
+            }
         });
         volver.setMaximumSize(buttonSize);
-        volver.setFont(new Font("Arial", Font.BOLD, 20));
+        volver.setFont(new Font("Arial", Font.BOLD, 16));
         volver.addActionListener(e -> {
             pantalla.dispose();
             Menu_Principal menuP = new Menu_Principal();
@@ -95,8 +94,7 @@ public class Reportes {
         historial.setAlignmentX(Component.CENTER_ALIGNMENT);
         volver.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        menu.add(topPanel);
-        menu.add(Box.createVerticalStrut(13));
+        menu.add(Box.createVerticalStrut(50));
         menu.add(titulo);
         menu.add(Box.createVerticalStrut(30));
         menu.add(ranking);

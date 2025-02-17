@@ -6,19 +6,22 @@ package xianquiproyecto;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 /**
  *
  * @author river
  */
 public class Crear_Cuenta {
-    
+
     public void Crear_Cuenta() {
-        
+
         JFrame pantalla = new JFrame("Crear Cuenta");
         pantalla.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         pantalla.setSize(500, 400);
         pantalla.setLocationRelativeTo(null);
-        
+
         JPanel topPanel = new JPanel();
         topPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
         JButton salir = new JButton("Salir");
@@ -83,18 +86,21 @@ public class Crear_Cuenta {
         JButton Signup = new JButton("Crear Cuenta");
         Signup.setBackground(Color.YELLOW);
         Signup.setAlignmentX(Component.CENTER_ALIGNMENT);
-        Signup.setFont(new Font("Arial", Font.BOLD, 20));
-
+        Signup.setFont(new Font("Arial", Font.BOLD, 16));
         Signup.addActionListener(e -> {
-            Player jugador_nuevo = Jugadores.juego.crear_jugador(username.getText(), contraseña.getText());
-            
-            if (jugador_nuevo == null) {
-                username.setText("");
-                contraseña.setText("");
+            if (contraseña.getText().length() == 5) {
+                Player jugador_nuevo = Jugadores.juego.crear_jugador(username.getText(), contraseña.getText());
+                if (jugador_nuevo == null) {
+                    username.setText("");
+                    contraseña.setText("");
+                } else {
+                    pantalla.dispose();
+                    Menu_Inicio menu = new Menu_Inicio();
+                    menu.Menu_Inicio();
+                }
             } else {
-                pantalla.dispose();
-                Menu_Inicio menu = new Menu_Inicio();
-                menu.Menu_Inicio();
+                JOptionPane.showMessageDialog(null, "La contraseña debe tener 5 caracteres.");
+                contraseña.setText("");
             }
         });
 
@@ -115,5 +121,5 @@ public class Crear_Cuenta {
 
         pantalla.add(crear_cuenta);
         pantalla.setVisible(true);
-    }   
+    }
 }

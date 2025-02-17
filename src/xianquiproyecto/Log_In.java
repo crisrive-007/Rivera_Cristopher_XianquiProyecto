@@ -58,7 +58,7 @@ public class Log_In {
 
         JLabel lblUsername = new JLabel("Nombre de usuario:");
         lblUsername.setForeground(Color.YELLOW);
-        lblUsername.setFont(new Font("Arial", Font.BOLD, 20));
+        lblUsername.setFont(new Font("Arial", Font.BOLD, 16));
         JTextField username = new JTextField(15);
 
         gbc.gridx = 0;
@@ -70,7 +70,7 @@ public class Log_In {
 
         JLabel lblPassword = new JLabel("Contraseña:");
         lblPassword.setForeground(Color.YELLOW);
-        lblPassword.setFont(new Font("Arial", Font.BOLD, 20));
+        lblPassword.setFont(new Font("Arial", Font.BOLD, 16));
         JPasswordField contraseña = new JPasswordField(15);
 
         gbc.gridx = 0;
@@ -83,7 +83,7 @@ public class Log_In {
         JButton Login = new JButton("Iniciar Sesión");
         Login.setBackground(Color.YELLOW);
         Login.setAlignmentX(Component.CENTER_ALIGNMENT);
-        Login.setFont(new Font("Arial", Font.BOLD, 20));
+        Login.setFont(new Font("Arial", Font.BOLD, 16));
 
         Login.addActionListener(e -> {
             Player jugador = Jugadores.juego.inicio_sesion(0, username.getText(), new String(contraseña.getPassword()));

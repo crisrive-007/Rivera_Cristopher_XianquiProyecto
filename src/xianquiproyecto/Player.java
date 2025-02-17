@@ -25,6 +25,7 @@ public class Player implements Almacenamiento {
     public int cantidad_piezas;
     public int numero;
     public String[] logs;
+    public String[] movimientos;
     public static final int partidas = 10;
 
     public Player(String username, String password) {
@@ -41,6 +42,7 @@ public class Player implements Almacenamiento {
         this.piezas = new int[16][2];
         this.cantidad_piezas = 0;
         this.logs = new String[partidas];
+        this.movimientos = new String[100];
     }
 
     public final String getUsername() {
@@ -111,6 +113,20 @@ public class Player implements Almacenamiento {
             }
         }
         cantidad_piezas--;
+    }
+    
+    @Override
+    public void agregarMovimientos(String movimiento) {
+        for (int i = 0; i < movimientos.length; i++) {
+            if(movimientos[i] == null) {
+                movimientos[i] = movimiento;
+                return;
+            }
+        }
+    }
+    
+    public String[] getMovimientos() {
+        return movimientos;
     }
 
     @Override

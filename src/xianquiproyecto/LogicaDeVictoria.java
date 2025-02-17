@@ -56,6 +56,10 @@ public final class LogicaDeVictoria {
             Jugadores.juego.jugador1.setPartidas_perdidas(Jugadores.juego.jugador1.getPartidas_perdidas() + 1);
             Jugadores.juego.jugador2.añadir_log("El jugador " + Jugadores.juego.jugador2.getUsername() + " gana porque se ha comido el general de " + Jugadores.juego.jugador1.getUsername() + "!");
             Jugadores.juego.jugador1.añadir_log("El jugador " + Jugadores.juego.jugador1.getUsername() + " pierde en contra de " + Jugadores.juego.jugador2.getUsername() + " porque se han comido a su general.");
+            for (int i = 0; i < 100; i++) {
+                Jugadores.juego.jugador1.movimientos[i] = null;
+                Jugadores.juego.jugador2.movimientos[i] = null;
+            }
             return true;
         } else if (!generalNegroVivo) {
             JOptionPane.showMessageDialog(null, "El jugador " + Jugadores.juego.jugador1.getUsername() + " vencio a " + Jugadores.juego.jugador2.getUsername() + ".\n¡Felicidades, has ganado 3 puntos!");
@@ -64,6 +68,10 @@ public final class LogicaDeVictoria {
             Jugadores.juego.jugador2.setPartidas_perdidas(Jugadores.juego.jugador2.getPartidas_perdidas() + 1);
             Jugadores.juego.jugador1.añadir_log("El jugador " + Jugadores.juego.jugador1.getUsername() + " gana porque se ha comido el general de " + Jugadores.juego.jugador2.getUsername() + "!");
             Jugadores.juego.jugador2.añadir_log("El jugador " + Jugadores.juego.jugador2.getUsername() + " pierde en contra de " + Jugadores.juego.jugador1.getUsername() + " porque se han comido a su general.");
+            for (int i = 0; i < 100; i++) {
+                Jugadores.juego.jugador1.movimientos[i] = null;
+                Jugadores.juego.jugador2.movimientos[i] = null;
+            }
             return true;
         }
 

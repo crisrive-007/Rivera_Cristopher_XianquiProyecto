@@ -29,20 +29,6 @@ public class Menu_Principal {
         };
         menu.setLayout(new BoxLayout(menu, BoxLayout.Y_AXIS));
 
-        JPanel topPanel = new JPanel();
-        topPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-        JButton salir = new JButton("Salir");
-        salir.setBackground(Color.YELLOW);
-        salir.setForeground(Color.BLACK);
-        salir.setFont(new Font("Arial", Font.BOLD, 14));
-        salir.addActionListener(e -> {
-            pantalla.dispose();
-            Menu_Inicio menuI = new Menu_Inicio();
-            menuI.Menu_Inicio();
-        });
-        topPanel.add(salir);
-        topPanel.setOpaque(false);
-
         ImageIcon icon = new ImageIcon(getClass().getResource("/imagenes/XIANGQI.PNG"));
         Image imagen = icon.getImage().getScaledInstance(300, 85, Image.SCALE_SMOOTH);
         JLabel titulo = new JLabel(new ImageIcon(imagen));
@@ -93,7 +79,7 @@ public class Menu_Principal {
         });
 
         Dimension buttonSize = new Dimension(200, 40);
-        Font buttonFont = new Font("Arial", Font.BOLD, 18);
+        Font buttonFont = new Font("Arial", Font.BOLD, 16);
 
         for (JButton button : new JButton[]{jugar, reportes, perfil, cerrarSesion}) {
             button.setMaximumSize(buttonSize);
@@ -102,8 +88,7 @@ public class Menu_Principal {
             button.setAlignmentX(Component.CENTER_ALIGNMENT);
         }
 
-        menu.add(topPanel);
-        menu.add(Box.createVerticalStrut(13));
+        menu.add(Box.createVerticalStrut(50));
         menu.add(titulo);
         menu.add(Box.createVerticalStrut(30));
         menu.add(jugar);

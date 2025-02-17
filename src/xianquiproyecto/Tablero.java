@@ -16,24 +16,39 @@ public final class Tablero {
     private final JButton[][] celdas = new JButton[10][9];
     private final Piezas[][] piezas = new Piezas[10][9];
     protected JFrame pantalla;
+    private JLabel turno;
     private JPanel casillasSuperior;
     private JPanel casillasInferior;
     private JPanel panelIzquierdo;
     private JPanel panelDerecho;
     public JPanel capturasJugador1;
     public JPanel capturasJugador2;
+    private JTextArea movimientosJugador1;
+    private JTextArea movimientosJugador2;
+    private JScrollPane scrollMovimientos1;
+    private JScrollPane scrollMovimientos2;
     private Piezas piezaSeleccionada;
     public static Tablero tab = new Tablero();
 
-    public void iniciarTablero() {
+    public final void iniciarTablero() {
         pantalla = new JFrame("Xiangqi - Nueva partida");
         pantalla.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        pantalla.setSize(1180, 810);
+        pantalla.setSize(1200, 825);
         pantalla.setBackground(Color.decode("#891c00"));
         pantalla.setLocationRelativeTo(null);
 
         JPanel tablero = new JPanel(new BorderLayout());
         tablero.setBackground(Color.decode("#891c00"));
+
+        turno = new JLabel("Turno: " + Jugadores.juego.jugador1.getUsername(), SwingConstants.CENTER);
+        turno.setFont(new Font("Arial", Font.BOLD, 20));
+        turno.setForeground(Color.BLACK);
+        turno.setBackground(Color.LIGHT_GRAY);
+        turno.setOpaque(true);
+
+        JPanel panelTurno = new JPanel(new BorderLayout());
+        panelTurno.setBackground(Color.decode("#891c00"));
+        panelTurno.add(turno, BorderLayout.CENTER);
 
         casillasSuperior = new JPanel(new GridLayout(5, 9));
         casillasInferior = new JPanel(new GridLayout(5, 9));
@@ -70,9 +85,9 @@ public final class Tablero {
         panelIzquierdo.setBackground(Color.LIGHT_GRAY);
         panelIzquierdo.setLayout(new BoxLayout(panelIzquierdo, BoxLayout.Y_AXIS));
 
-        JLabel labelJugador1 = new JLabel("Jugador 1: " + Jugadores.juego.jugador1.getUsername(), SwingConstants.CENTER);
+        JLabel labelJugador1 = new JLabel("Jugador 1: " + Jugadores.juego.jugador1.getUsername() + " (Rojo)", SwingConstants.CENTER);
         labelJugador1.setFont(new Font("Arial", Font.BOLD, 18));
-        labelJugador1.setForeground(Color.BLACK);
+        labelJugador1.setForeground(Color.RED);
         panelIzquierdo.add(labelJugador1);
 
         panelIzquierdo.add(Box.createVerticalStrut(20));
@@ -83,14 +98,14 @@ public final class Tablero {
         panelIzquierdo.add(piezasCapturadas1);
         panelIzquierdo.add(capturasJugador1);
 
-        panelIzquierdo.add(Box.createVerticalStrut(1000));
+        panelIzquierdo.add(Box.createVerticalStrut(10));
 
         panelDerecho = new JPanel();
         panelDerecho.setPreferredSize(new Dimension(255, 0));
         panelDerecho.setBackground(Color.LIGHT_GRAY);
         panelDerecho.setLayout(new BoxLayout(panelDerecho, BoxLayout.Y_AXIS));
 
-        JLabel labelJugador2 = new JLabel("Jugador 2: " + Jugadores.juego.jugador2.getUsername(), SwingConstants.CENTER);
+        JLabel labelJugador2 = new JLabel("Jugador 2: " + Jugadores.juego.jugador2.getUsername() + " (Negro)", SwingConstants.CENTER);
         labelJugador2.setFont(new Font("Arial", Font.BOLD, 18));
         labelJugador2.setForeground(Color.BLACK);
         panelDerecho.add(labelJugador2);
@@ -103,7 +118,17 @@ public final class Tablero {
         panelDerecho.add(piezasCapturadas2);
         panelDerecho.add(capturasJugador2);
 
-        panelDerecho.add(Box.createVerticalStrut(1000));
+        panelDerecho.add(Box.createVerticalStrut(10));
+
+        movimientosJugador1 = new JTextArea(10, 20);
+        movimientosJugador1.setEditable(false);
+        scrollMovimientos1 = new JScrollPane(movimientosJugador1);
+        panelIzquierdo.add(scrollMovimientos1);
+
+        movimientosJugador2 = new JTextArea(10, 20);
+        movimientosJugador2.setEditable(false);
+        scrollMovimientos2 = new JScrollPane(movimientosJugador2);
+        panelDerecho.add(scrollMovimientos2);
 
         tablero.add(crearPanelNumeros(), BorderLayout.WEST);
         tablero.add(crearPanelNumeros(), BorderLayout.EAST);
@@ -111,7 +136,7 @@ public final class Tablero {
         tablero.add(crearPanelLetras(), BorderLayout.SOUTH);
         tablero.add(contenedorCasillas, BorderLayout.CENTER);
 
-        JButton botonSalir = new JButton("Salir");
+        JButton botonSalir = new JButton("Rendirse");
         botonSalir.setFont(new Font("Arial", Font.BOLD, 16));
         botonSalir.setBackground(Color.decode("#891c00"));
         botonSalir.setForeground(Color.WHITE);
@@ -124,8 +149,12 @@ public final class Tablero {
                     Jugadores.juego.jugador2.setPuntos(Jugadores.juego.jugador2.getPuntos() + 3);
                     Jugadores.juego.jugador2.setPartidas_ganadas(Jugadores.juego.jugador2.getPartidas_ganadas() + 1);
                     Jugadores.juego.jugador1.setPartidas_perdidas(Jugadores.juego.jugador1.getPartidas_perdidas() + 1);
-                    Jugadores.juego.jugador2.añadir_log("¡El jugador " + Jugadores.juego.jugador2.getUsername() + " gana porque "  + Jugadores.juego.jugador1.getUsername() + " ha abandonado la partida!");
+                    Jugadores.juego.jugador2.añadir_log("¡El jugador " + Jugadores.juego.jugador2.getUsername() + " gana porque " + Jugadores.juego.jugador1.getUsername() + " ha abandonado la partida!");
                     Jugadores.juego.jugador1.añadir_log("¡El jugador " + Jugadores.juego.jugador1.getUsername() + " pierde contra " + Jugadores.juego.jugador2.getUsername() + " porque ha abandonado la partida!");
+                    for (int i = 0; i < 100; i++) {
+                        Jugadores.juego.jugador1.movimientos[i] = null;
+                        Jugadores.juego.jugador2.movimientos[i] = null;
+                    }
                 } else if (Jugadores.juego.jugador_actual == Jugadores.juego.jugador2) {
                     JOptionPane.showMessageDialog(null, "El jugador " + Jugadores.juego.jugador1.getUsername() + " vencio a " + Jugadores.juego.jugador2.getUsername() + ".\n¡Felicidades, has ganado 3 puntos!");
                     Jugadores.juego.jugador1.setPuntos(Jugadores.juego.jugador1.getPuntos() + 3);
@@ -133,6 +162,10 @@ public final class Tablero {
                     Jugadores.juego.jugador2.setPartidas_perdidas(Jugadores.juego.jugador2.getPartidas_perdidas() + 1);
                     Jugadores.juego.jugador1.añadir_log("¡El jugador " + Jugadores.juego.jugador1.getUsername() + " gana porque " + Jugadores.juego.jugador2.getUsername() + " ha abandonado la partida!");
                     Jugadores.juego.jugador2.añadir_log("¡El jugador " + Jugadores.juego.jugador2.getUsername() + " pierde contra " + Jugadores.juego.jugador1.getUsername() + " porque ha abandonado la partida!");
+                    for (int i = 0; i < 100; i++) {
+                        Jugadores.juego.jugador1.movimientos[i] = null;
+                        Jugadores.juego.jugador2.movimientos[i] = null;
+                    }
                 }
                 pantalla.dispose();
                 LogicaDeVictoria.victoria.finDelJuego = true;
@@ -147,6 +180,7 @@ public final class Tablero {
 
         pantalla.setLayout(new BorderLayout());
         pantalla.add(panelIzquierdo, BorderLayout.WEST);
+        pantalla.add(panelTurno, BorderLayout.NORTH);
         pantalla.add(tablero, BorderLayout.CENTER);
         pantalla.add(panelDerecho, BorderLayout.EAST);
         pantalla.add(panelBoton, BorderLayout.SOUTH);
@@ -155,7 +189,10 @@ public final class Tablero {
 
         colocarPiezasIniciales();
         Jugadores.juego.jugador_actual = Jugadores.juego.jugador1;
-        JOptionPane.showMessageDialog(null, Jugadores.juego.turno());
+    }
+
+    private String turno() {
+        return "Turno: " + Jugadores.juego.jugador_actual.getUsername();
     }
 
     private JButton crearCelda(int fila, int columna) {
@@ -171,7 +208,7 @@ public final class Tablero {
     private JPanel crearPanelNumeros() {
         JPanel panel = new JPanel(new GridLayout(10, 1));
         panel.setBackground(Color.decode("#891c00"));
-        for (int i = 10; i >= 1; i--) {
+        for (int i = 1; i <= 10; i++) {
             JLabel etiqueta = new JLabel(String.valueOf(i), SwingConstants.CENTER);
             etiqueta.setFont(new Font("Arial", Font.BOLD, 20));
             etiqueta.setForeground(Color.WHITE);
@@ -220,6 +257,26 @@ public final class Tablero {
         return tipoPieza + "-" + color + ".png";
     }
 
+    private void mostrarMovimientos() {
+        if (Jugadores.juego.jugador1.getMovimientos() != null) {
+            movimientosJugador1.setText("");
+            for (String movimiento : Jugadores.juego.jugador1.getMovimientos()) {
+                if (movimiento != null) {
+                    movimientosJugador1.append(movimiento + "\n");
+                }
+            }
+        }
+
+        if (Jugadores.juego.jugador2.getMovimientos() != null) {
+            movimientosJugador2.setText("");
+            for (String movimiento : Jugadores.juego.jugador2.getMovimientos()) {
+                if (movimiento != null) {
+                    movimientosJugador2.append(movimiento + "\n");
+                }
+            }
+        }
+    }
+
     private void colocarPiezasIniciales() {
         piezas[0][0] = new Carro_de_Guerra(0, 0, true);
         piezas[0][1] = new Caballo(0, 1, true);
@@ -254,7 +311,7 @@ public final class Tablero {
         piezas[6][4] = new Soldado(6, 4, false);
         piezas[6][6] = new Soldado(6, 6, false);
         piezas[6][8] = new Soldado(6, 8, false);
-        
+
         LogicaDeVictoria.victoria.finDelJuego = false;
 
         for (int fila = 0; fila < 10; fila++) {
@@ -303,12 +360,16 @@ public final class Tablero {
                 piezas[fila][columna] = piezaSeleccionada;
 
                 piezaSeleccionada.moverPieza(fila, columna, piezas, celdas);
+                String movimiento = "Movimiento: " + piezaSeleccionada.getClass().getSimpleName() + " a Fila: " + (fila + 1) + " - Columna: " + (columna + 1);
+                Jugadores.juego.jugador_actual.agregarMovimientos(movimiento);
+                mostrarMovimientos();
                 piezaSeleccionada.colocarPieza(celdas[fila][columna], fila, columna);
 
                 piezaSeleccionada.limpiarResaltado(celdas);
 
                 if (!LogicaDeVictoria.victoria.gameOver(piezas)) {
                     Jugadores.juego.cambio_turno();
+                    turno.setText(turno());
                 } else {
                     pantalla.dispose();
                 }

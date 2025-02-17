@@ -30,20 +30,6 @@ public class Mi_Perfil {
         };
         menu.setLayout(new BoxLayout(menu, BoxLayout.Y_AXIS));
 
-        JPanel topPanel = new JPanel();
-        topPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-        JButton salir = new JButton("Salir");
-        salir.setBackground(Color.YELLOW);
-        salir.setForeground(Color.BLACK);
-        salir.setFont(new Font("Arial", Font.BOLD, 14));
-        salir.addActionListener(e -> {
-            pantalla.dispose();
-            Menu_Principal menuP = new Menu_Principal();
-            menuP.Menu_Principal();
-        });
-        topPanel.add(salir);
-        topPanel.setOpaque(false);
-
         ImageIcon icon = new ImageIcon(getClass().getResource("/imagenes/XIANGQI.PNG"));
         Image imagen = icon.getImage().getScaledInstance(300, 85, Image.SCALE_SMOOTH);
         JLabel titulo = new JLabel(new ImageIcon(imagen));
@@ -56,8 +42,20 @@ public class Mi_Perfil {
         });
         JButton cambiar_contraseña = new JButton("Cambiar Contraseña");
         cambiar_contraseña.addActionListener(e -> {
-            Jugadores.juego.jugador1.setPassword(JOptionPane.showInputDialog("Ingresa la nueva contraseña:"));
-            JOptionPane.showMessageDialog(null, "Se ha cambiado la contraseña con exito.");
+            String contra_actual = Jugadores.juego.jugador1.getPassword();
+            String nueva_contra = (JOptionPane.showInputDialog("Ingresa la nueva contraseña:"));
+            if (nueva_contra != null) {
+                if (nueva_contra.length() == 5) {
+                    if (!nueva_contra.equals(contra_actual)) {
+                        Jugadores.juego.jugador1.setPassword(nueva_contra);
+                        JOptionPane.showMessageDialog(null, "Se ha cambiado la contraseña con exito.");
+                    } else {
+                        JOptionPane.showMessageDialog(null, "La nueva contraseña no puede ser la misma que la actual.");
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "La nueva contraseña debe tener 5 caracteres.");
+                }
+            }
         });
         JButton eliminar = new JButton("Eliminar Cuenta");
         eliminar.addActionListener(e -> {
@@ -67,7 +65,7 @@ public class Mi_Perfil {
                 menuI.Menu_Inicio();
             }
         });
-        JButton volver = new JButton("Volver al inicio.");
+        JButton volver = new JButton("Volver al inicio");
         volver.addActionListener(e -> {
             pantalla.dispose();
             Menu_Principal menuP = new Menu_Principal();
@@ -75,7 +73,7 @@ public class Mi_Perfil {
         });
 
         Dimension buttonSize = new Dimension(200, 40);
-        Font buttonFont = new Font("Arial", Font.BOLD, 18);
+        Font buttonFont = new Font("Arial", Font.BOLD, 16);
 
         for (JButton button : new JButton[]{datos, cambiar_contraseña, eliminar, volver}) {
             button.setMaximumSize(buttonSize);
@@ -84,8 +82,7 @@ public class Mi_Perfil {
             button.setAlignmentX(Component.CENTER_ALIGNMENT);
         }
 
-        menu.add(topPanel);
-        menu.add(Box.createVerticalStrut(13));
+        menu.add(Box.createVerticalStrut(50));
         menu.add(titulo);
         menu.add(Box.createVerticalStrut(30));
         menu.add(datos);

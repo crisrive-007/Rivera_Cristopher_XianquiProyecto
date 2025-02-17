@@ -5,9 +5,8 @@
 package xianquiproyecto;
 
 import java.awt.Color;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -62,6 +61,7 @@ public abstract class Piezas {
     }
 
     public void resaltarMovimientosValidos(Piezas piezaSeleccionada, Piezas[][] piezas, JButton[][] celdas, int fila, int columna) {
+    try {
         limpiarResaltado(celdas);
         piezaSeleccionada = piezas[fila][columna];
 
@@ -74,9 +74,17 @@ public abstract class Piezas {
                 }
             }
         }
+    } catch (ArrayIndexOutOfBoundsException e) {
+        JOptionPane.showMessageDialog(null, "Error: índice fuera de los límites en resaltarMovimientosValidos.");
+    } catch (NullPointerException e) {
+        JOptionPane.showMessageDialog(null, "Error: uno de los objetos es nulo en resaltarMovimientosValidos.");
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(null, "Error inesperado en resaltarMovimientosValidos: " + e.getMessage());
     }
+}
 
-    public void limpiarResaltado(JButton[][] celdas) {
+public void limpiarResaltado(JButton[][] celdas) {
+    try {
         for (int fila = 0; fila < celdas.length; fila++) {
             for (int columna = 0; columna < celdas[fila].length; columna++) {
                 if (celdas[fila][columna] != null) {
@@ -88,13 +96,22 @@ public abstract class Piezas {
                 }
             }
         }
+    } catch (NullPointerException e) {
+        JOptionPane.showMessageDialog(null, "Error: los botones de la celda son nulos.");
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(null, "Error inesperado al limpiar resaltado: " + e.getMessage());
     }
+}
 
     public void capturarPieza(int nuevaFila, int nuevaColumna, Piezas[][] piezas, JButton[][] celdas, Piezas piezaCapturada) {
         if (piezaCapturada.esNegro) {
             Jugadores.juego.jugador1.eliminarPieza(nuevaFila, nuevaColumna);
+            String movimiento = "Captura: " + piezaCapturada.getClass().getSimpleName() + " en Fila: " + (nuevaFila + 1) + " - Columna: " + (nuevaColumna + 1);
+            Jugadores.juego.jugador1.agregarMovimientos(movimiento);
         } else {
             Jugadores.juego.jugador2.eliminarPieza(nuevaFila, nuevaColumna);
+            String movimiento = "Captura: " + piezaCapturada.getClass().getSimpleName() + " en Fila: " + (nuevaFila + 1) + " - Columna: " + (nuevaColumna + 1);
+            Jugadores.juego.jugador2.agregarMovimientos(movimiento);
         }
         piezaCapturada.capturada = true;
         moverPieza(nuevaFila, nuevaColumna, piezas, celdas);

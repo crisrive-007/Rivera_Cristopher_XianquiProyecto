@@ -12,4 +12,5 @@ public interface Almacenamiento {
     void agregarPieza(int fila, int columna, Piezas pieza);
     void eliminarPieza(int fila, int columna);
     void añadir_log(String log);
+    void agregarMovimientos(String movimiento);
 }

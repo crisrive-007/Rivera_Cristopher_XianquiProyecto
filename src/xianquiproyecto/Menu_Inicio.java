@@ -44,21 +44,21 @@ public class Menu_Inicio {
 
         Dimension buttonSize = new Dimension(200, 40);
         log_in.setMaximumSize(buttonSize);
-        log_in.setFont(new Font("Arial", Font.BOLD, 20));
+        log_in.setFont(new Font("Arial", Font.BOLD, 16));
         log_in.addActionListener(e -> {
             Log_In login = new Log_In();
             login.Log_In();
             pantalla.dispose();
         });
         crear_cuenta.setMaximumSize(buttonSize);
-        crear_cuenta.setFont(new Font("Arial", Font.BOLD, 20));
+        crear_cuenta.setFont(new Font("Arial", Font.BOLD, 16));
         crear_cuenta.addActionListener(e -> {
             Crear_Cuenta cuenta = new Crear_Cuenta();
             cuenta.Crear_Cuenta();
             pantalla.dispose();
         });
         salir.setMaximumSize(buttonSize);
-        salir.setFont(new Font("Arial", Font.BOLD, 20));
+        salir.setFont(new Font("Arial", Font.BOLD, 16));
         salir.addActionListener(e -> {
             pantalla.dispose();
         });
